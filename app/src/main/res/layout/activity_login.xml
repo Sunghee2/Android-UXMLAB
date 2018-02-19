@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="e.sky64.retrofit_practice.Activities.LoginActivity">
+
+    <TextView
+        android:id="@+id/id_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/user_id"
+        android:layout_alignParentTop="true"
+        android:text="ID"
+        android:textSize="30dp" />
+
+    <TextView
+        android:id="@+id/pw_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/id_view"
+        android:text="PW"
+        android:textSize="30dp" />
+
+    <EditText
+        android:id="@+id/user_pw"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="42dp"
+        android:ems="10"
+        android:hint="password"
+        android:inputType="textPassword" />
+
+    <Button
+        android:id="@+id/btn_signin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/user_pw"
+        android:layout_marginTop="18dp"
+        android:text="SIGN IN"
+        android:onClick="clickSignIn"
+        />
+
+    <Button
+        android:id="@+id/btn_signup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/btn_signin"
+        android:layout_centerHorizontal="true"
+
+        android:text="SIGN UP" />
+
+    <EditText
+        android:id="@+id/user_id"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/user_pw"
+        android:layout_alignParentTop="true"
+        android:layout_alignStart="@+id/user_pw"
+        android:ems="10"
+        android:hint="id"
+        android:inputType="textEmailAddress" />
+
+</RelativeLayout>
