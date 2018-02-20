@@ -4,7 +4,11 @@
     android:id="@+id/activity_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="e.sky64.retrofit_practice.Activities.LoginActivity">
+    tools:context="e.sky64.retrofit_practice.Activities.LoginActivity"
+    android:layout_marginTop="5dp"
+    android:layout_marginRight="5dp"
+    android:layout_marginLeft="5dp"
+    android:layout_marginBottom="5dp">
 
     <TextView
         android:id="@+id/id_view"

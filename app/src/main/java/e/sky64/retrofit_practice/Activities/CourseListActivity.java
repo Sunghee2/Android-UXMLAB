@@ -228,7 +228,6 @@ public class CourseListActivity extends AppCompatActivity {
         alert.show();
     }
 
-    // 아직 수정해야됨.
     // 강의 등록할 때 입력한 key가 맞는지 확인.
     public void checkKey(String course_key, String course_no) {
         // Retrofit에서 제공하는 기본 uri에 연결하여 Json 데이터를 Gson으로 가져올 수 있도록 한다
