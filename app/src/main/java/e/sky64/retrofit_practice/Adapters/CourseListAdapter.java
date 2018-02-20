@@ -4,15 +4,20 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.media.Image;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.List;
 
+import e.sky64.retrofit_practice.Activities.CourseActivity;
 import e.sky64.retrofit_practice.Activities.CourseListActivity;
 import e.sky64.retrofit_practice.Activities.EditCourseActivity;
 import e.sky64.retrofit_practice.Api.Api;
@@ -34,12 +39,14 @@ public class CourseListAdapter extends BaseAdapter {
     private List<Course> courseList;
     private int isStudent;
 
+    private LinearLayout courseInfoLayout;
+
     private TextView courseNumTextView;
     private TextView courseNameTextView;
     private TextView professorTextView;
 
-    private Button edit_course_btn;
-    private Button delete_course_btn;
+    private ImageButton edit_course_btn;
+    private ImageButton delete_course_btn;
 
 
 
@@ -78,26 +85,30 @@ public class CourseListAdapter extends BaseAdapter {
         courseNumTextView = (TextView) view.findViewById(R.id.courseNumTextView);
         courseNameTextView = (TextView) view.findViewById(R.id.courseNameTextView);
         professorTextView = (TextView) view.findViewById(R.id.professorTextView);
-        edit_course_btn = (Button) view.findViewById(R.id.btn_edit_course);
-        delete_course_btn = (Button) view.findViewById(R.id.btn_delete_course);
+        edit_course_btn = (ImageButton) view.findViewById(R.id.btn_edit_course);
+        delete_course_btn = (ImageButton) view.findViewById(R.id.btn_delete_course);
 
         // 강의 번호, 이름, 교수명을 받아와서 보여줌.
         courseNumTextView.setText(String.valueOf(courseList.get(position).getCourseNo()));
         courseNameTextView.setText(courseList.get(position).getCourseName());
         professorTextView.setText(courseList.get(position).getProfessor());
 
-        // 관리자 계정이면 강의 수정, 삭제 버튼을 볼 수 있도록 함.
+        // 관리자 계정이면 강의 수정, 삭제 버튼을 볼 수 있도록 하고 클릭 이벤트 생성
         if(isStudent==0){
             edit_course_btn.setVisibility(View.VISIBLE);
             delete_course_btn.setVisibility(View.VISIBLE);
+
+            edit_course_btn.setTag(position);
+            edit_course_btn.setOnClickListener(editBtnClickListener);
+
+            delete_course_btn.setTag(position);
+            delete_course_btn.setOnClickListener(deleteBtnClickListener);
+
+            // 버튼 클릭 이벤트 하려면 나머지 부분의 클릭은 동작하지 않으므로 따로 레이아웃 클릭 이벤트를 만들어줌.
+            courseInfoLayout = (LinearLayout) view.findViewById(R.id.courseInfoLayout);
+            courseInfoLayout.setTag(position);
+            courseInfoLayout.setOnClickListener(courseInfoLayoutClickListener);
         }
-
-
-        edit_course_btn.setTag(position);
-        edit_course_btn.setOnClickListener(editBtnClickListener);
-
-        delete_course_btn.setTag(position);
-        delete_course_btn.setOnClickListener(deleteBtnClickListener);
 
         return view;
     }
@@ -166,9 +177,9 @@ public class CourseListAdapter extends BaseAdapter {
                 int result = response.body().get(0).getResult();
 
                 if(result==0) { // 삭제되지 않은 경우
-                    Toast.makeText(context, "key가 올바르지 않습니다.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, "삭제 실패", Toast.LENGTH_SHORT).show();
                 } else if (result==1) { // 강의가 삭제된 경우
-                    Toast.makeText(context, "성공적으로 등록되었습니다.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, "성공적으로 삭제되었습니다.", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(context, CourseListActivity.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     context.startActivity(intent);
@@ -182,4 +193,14 @@ public class CourseListAdapter extends BaseAdapter {
         });
     }
 
+    // 관리자 계정일 때 전체 강의를 누르면 강의상세페이지로 넘어가게 함.
+    Button.OnClickListener courseInfoLayoutClickListener = new Button.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            int position = Integer.parseInt(view.getTag().toString());
+            Intent intent = new Intent(context, CourseActivity.class);
+            intent.putExtra("course_no", courseList.get(position).getCourseNo());
+            context.startActivity(intent);
+        }
+    };
 }

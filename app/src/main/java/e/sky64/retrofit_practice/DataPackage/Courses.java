@@ -10,8 +10,6 @@ import java.util.List;
  */
 // course DB에 저장되어 있는 data들을 가져오기 위해서 사용되는 데이터 관리 클래스
 public class Courses {
-
-    // serializedName 에서는 json으로 받아올 파라메터의 이름을 정의한다
         @SerializedName("is_my_course")
         @Expose
         private int isMyCourse;  // 등록된 강의가 있으면 1 없으면 0

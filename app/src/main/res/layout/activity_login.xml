@@ -62,6 +62,8 @@
         android:layout_alignStart="@+id/user_pw"
         android:ems="10"
         android:hint="id"
-        android:inputType="textEmailAddress" />
+        android:inputType="number" >
+        <requestFocus/>
+    </EditText>
 
 </RelativeLayout>

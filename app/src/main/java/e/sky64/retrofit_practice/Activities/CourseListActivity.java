@@ -23,6 +23,7 @@ import android.widget.ScrollView;
 import android.widget.Toast;
 import android.support.v7.widget.Toolbar;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import e.sky64.retrofit_practice.Adapters.CourseListAdapter;
@@ -53,6 +54,8 @@ public class CourseListActivity extends AppCompatActivity {
 
     private void initUI() {
         userApplication = (GlobalUserApplication) getApplication();
+        scrollView = (NestedScrollView) findViewById(R.id.scrollView);
+
         if(userApplication.getIsStudent()==0){
             // 관리자 계정일 때 나타나는 강의 추가 버튼임
             add_course_btn = (FloatingActionButton) findViewById(R.id.add_course_btn);
@@ -70,7 +73,6 @@ public class CourseListActivity extends AppCompatActivity {
                 }
             });
         }
-        scrollView = (NestedScrollView) findViewById(R.id.scrollView);
         myCourseListView = (ListView) findViewById(R.id.listview_my_course);
         allCourseListView = (ListView) findViewById(R.id.listview_all_course);
 
@@ -125,25 +127,29 @@ public class CourseListActivity extends AppCompatActivity {
         Api api = retrofit.create(Api.class);
 
         // 호출을 위한 object를 생성. api 인터페이스에서 정의한 내용을 가져오게 된다
-        Call<List<Courses>> call = api.getCourse(userApplication.getId());
+        Call<Courses> call = api.getCourse(userApplication.getId());
 
 
-        call.enqueue(new Callback<List<Courses>>() {
+        call.enqueue(new Callback<Courses>() {
 
             // call 한 후의 처리를 결정하는 메서드
                 @Override
-                public void onResponse(Call<List<Courses>> call, Response<List<Courses>> response) {
+                public void onResponse(Call<Courses> call, Response<Courses> response) {
                     // 전체 결과를 가져옴.
-                    courses = response.body().get(0);
+                    courses = response.body();
                     // 등록된 강의가 있는지 확인.
                     int is_my_course = courses.getIsMyCourse();
-
-                    Log.e("dasfafsd", Integer.toString(is_my_course));
 
                     if(is_my_course==1) { // 내 강의가 있을 경우
                         myCourseList = courses.getMyCourse();
 
                         courseListAdapter = new CourseListAdapter(CourseListActivity.this, myCourseList, userApplication.getIsStudent());
+                        myCourseListView.setAdapter(courseListAdapter);
+                        setListViewHeightBaseOnChildren(myCourseListView);
+                    } else if(is_my_course==0 && userApplication.getIsStudent()==1) { // 등록된 강의가 없고 학생이면 등록된 강의가 없음을 알려준다.
+                        myCourseList = new ArrayList<>();
+                        myCourseList.add(new Course("", "등록된 강의가 없습니다.", ""));
+                        courseListAdapter = new CourseListAdapter(CourseListActivity.this, myCourseList, 1);
                         myCourseListView.setAdapter(courseListAdapter);
                         setListViewHeightBaseOnChildren(myCourseListView);
                     }
@@ -158,8 +164,8 @@ public class CourseListActivity extends AppCompatActivity {
 
                 // 실패시 처리하는 방법을 정하는 메서드
                 @Override
-                public void onFailure(Call<List<Courses>> call, Throwable t) {
-                Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
+                public void onFailure(Call<Courses> call, Throwable t) {
+                Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
     }
@@ -245,9 +251,15 @@ public class CourseListActivity extends AppCompatActivity {
                 int result = response.body().get(0).getResult();
 
                 if(result==0) { // 키가 잘못된 경우
-                    Toast.makeText(getApplicationContext(), "key가 올바르지 않습니다.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "key가 올바르지 않습니다.", Toast.LENGTH_LONG).show();
                 } else if (result==1) { // 강의가 등록된 경우 (insert 성공)
-                    Toast.makeText(getApplicationContext(), "성공적으로 등록되었습니다.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "성공적으로 등록되었습니다.", Toast.LENGTH_LONG).show();
+
+                    // 강의가 등록된 리스트를 새로 업데이트하기 위해서.
+                    Intent intent = new Intent(CourseListActivity.this, CourseListActivity.class);
+                    startActivity(intent);
+                    overridePendingTransition(0,0);
+                    finish();
                 }
             }
 

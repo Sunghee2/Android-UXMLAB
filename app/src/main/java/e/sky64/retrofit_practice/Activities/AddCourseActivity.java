@@ -1,6 +1,7 @@
 package e.sky64.retrofit_practice.Activities;
 
 import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -59,6 +60,8 @@ public class AddCourseActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_course);
+
+        initUI();
 
         date_text.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -126,8 +129,14 @@ public class AddCourseActivity extends AppCompatActivity {
 
                 if(result==0) { // 강의 추가가 안된 경우
                     Toast.makeText(getApplicationContext(), "실패", Toast.LENGTH_SHORT).show();
-                } else if (result==1) { // 강의가 추가되지 않은 경우
+                } else if (result==1) { // 강의 추가 성공
                     Toast.makeText(getApplicationContext(), "성공적으로 강의를 추가했습니다.", Toast.LENGTH_SHORT).show();
+
+                    // 강의가 추가된 리스트를 새로 업데이트하기 위해서.
+                    Intent intent = new Intent(AddCourseActivity.this, CourseListActivity.class);
+                    startActivity(intent);
+                    overridePendingTransition(0,0);
+                    finish();
                 }
             }
 
