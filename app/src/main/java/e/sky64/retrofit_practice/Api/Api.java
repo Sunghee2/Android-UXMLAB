@@ -58,4 +58,13 @@ public interface Api {
     @POST("uxmlab_course_register.php")
     Call<List<Result>> registerCourse(@Field("course_key") String course_key, @Field("course_no") String course_no, @Field("id") int id);
 
+
+    //과제
+    //과제등록
+    @FormUrlEncoded
+    @POST("add_assignment.php")
+    Call <List<Result>> addAssignment(
+            @Field("hw_name") String hw_name, @Field("hw_content") String hw_content, @Field("hw_due") String hw_due
+    );
+
 }
