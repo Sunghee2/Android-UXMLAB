@@ -3,9 +3,10 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/Android_UXMLAB.iml" filepath="$PROJECT_DIR$/Android_UXMLAB.iml" />
+      <module fileurl="file://D:\Android_UXMLAB\Android_UXMLAB.iml" filepath="D:\Android_UXMLAB\Android_UXMLAB.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/retrofit_practice.iml" filepath="$PROJECT_DIR$/retrofit_practice.iml" />
+      <module fileurl="file://D:\Android_UXMLAB\app\app.iml" filepath="D:\Android_UXMLAB\app\app.iml" />
+      <module fileurl="file://D:\Android_UXMLAB\retrofit_practice.iml" filepath="D:\Android_UXMLAB\retrofit_practice.iml" />
     </modules>
   </component>
 </project>

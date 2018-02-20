@@ -2,6 +2,7 @@ package e.sky64.retrofit_practice.Api;
 
 import java.util.List;
 
+import e.sky64.retrofit_practice.DataPackage.Board;
 import e.sky64.retrofit_practice.DataPackage.Course;
 import e.sky64.retrofit_practice.DataPackage.Courses;
 import e.sky64.retrofit_practice.DataPackage.LoginRequest;
@@ -21,7 +22,8 @@ import retrofit2.http.Query;
 // Api 정의
 public interface Api {
     // 접속 ip 및 URL 지정
-    String BASE_URL = "http://10.0.2.2:8080/";
+    //String BASE_URL = "http://10.0.2.2:8080/";
+    String BASE_URL = "http://192.168.33.25/";
 
     // 강의 리스트
     @FormUrlEncoded
@@ -66,5 +68,19 @@ public interface Api {
     Call <List<Result>> addAssignment(
             @Field("hw_name") String hw_name, @Field("hw_content") String hw_content, @Field("hw_due") String hw_due
     );
+
+
+    //공지사항 쓰기
+    @FormUrlEncoded
+    @POST("uxmlab_write_board.php")
+    Call<List<Board>> getResultBoard(@Field("board_title") String board_title, @Field("board_content") String board_content, @Field("author") String author,
+                                     @Field("course_no") String course_no
+    );
+
+    //공지사항 읽기
+    @FormUrlEncoded
+    @POST("uxmlab_read_board.php")
+    Call<List<Board>> getBoard(@Field("course_no") int course_no);
+
 
 }

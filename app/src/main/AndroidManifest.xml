@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="e.sky64.retrofit_practice">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:name=".GlobalUserApplication"
         android:allowBackup="true"
@@ -17,13 +19,29 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".Activities.CourseListActivity" />
+        <activity android:name=".Activities.CourseDetailActivity" />
+        <activity android:name=".Activities.AddCourseActivity" />
+        <activity android:name=".Activities.EditCourseActivity" />
+        <activity android:name=".Activities.NoticeActivity" />
+        <activity android:name=".Activities.NoticeWriteActivity" />
+        <activity android:name=".Activities.FileUploadActivity"></activity>
+        <service
+            android:name=".Service.FirebaseMessagingService"
+            >
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+            </intent-filter>
+        </service>
 
-        <activity android:name=".Activities.CourseListActivity"/>
-        <activity android:name=".Activities.CourseActivity"/>
-        <activity android:name=".Activities.AddCourseActivity"/>
-        <activity android:name=".Activities.EditCourseActivity"/>
+        <service
+            android:name=".Service.FirebaseInstanceIDService"
+            >
+            <intent-filter>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>
+            </intent-filter>
+        </service>
 
     </application>
-    <uses-permission android:name="android.permission.INTERNET"/>
 
 </manifest>

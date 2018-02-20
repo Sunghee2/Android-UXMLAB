@@ -7,19 +7,15 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListAdapter;
 import android.widget.ListView;
-import android.widget.ScrollView;
 import android.widget.Toast;
 import android.support.v7.widget.Toolbar;
 
@@ -95,7 +91,7 @@ public class CourseListActivity extends AppCompatActivity {
         myCourseListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Intent intent = new Intent(CourseListActivity.this, CourseActivity.class);
+                Intent intent = new Intent(CourseListActivity.this, CourseDetailActivity.class);
                 intent.putExtra("course_no", String.valueOf(myCourseList.get(i).getCourseNo()));
                 startActivity(intent);
             }
@@ -169,7 +165,6 @@ public class CourseListActivity extends AppCompatActivity {
             }
         });
     }
-
     // add_course_btn(강의 추가) 버튼을 눌렀을 때 AddCourseActivity로 이동함.
     public void ClickAddCourse(View view) {
         Intent intent = new Intent(this, AddCourseActivity.class);
@@ -250,14 +245,14 @@ public class CourseListActivity extends AppCompatActivity {
                 int result = response.body().get(0).getResult();
 
                 if(result==0) { // 키가 잘못된 경우
-                    Toast.makeText(getApplicationContext(), "key가 올바르지 않습니다.", Toast.LENGTH_LONG).show();
-                } else if (result==1) { // 강의가 등록된 경우 (insert 성공)
-                    Toast.makeText(getApplicationContext(), "성공적으로 등록되었습니다.", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), "key가 올바르지 않습니다.", Toast.LENGTH_LONG).show();
+                    } else if (result==1) { // 강의가 등록된 경우 (insert 성공)
+                        Toast.makeText(getApplicationContext(), "성공적으로 등록되었습니다.", Toast.LENGTH_LONG).show();
 
-                    // 강의가 등록된 리스트를 새로 업데이트하기 위해서.
-                    Intent intent = new Intent(CourseListActivity.this, CourseListActivity.class);
-                    startActivity(intent);
-                    overridePendingTransition(0,0);
+                        // 강의가 등록된 리스트를 새로 업데이트하기 위해서.
+                        Intent intent = new Intent(CourseListActivity.this, CourseListActivity.class);
+                        startActivity(intent);
+                        overridePendingTransition(0,0);
                     finish();
                 }
             }

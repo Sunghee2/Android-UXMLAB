@@ -101,6 +101,7 @@ public class LoginActivity extends AppCompatActivity {
                     // test를 위해 추가한 전역변수 설정
                     GlobalUserApplication userApplication = (GlobalUserApplication) getApplication();
                     userApplication.setId(id);
+                    userApplication.getId();
                     userApplication.setIsStudent(loginResult.get(0).getIs_student());
 
                     startActivity(intent);

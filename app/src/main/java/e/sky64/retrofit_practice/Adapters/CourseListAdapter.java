@@ -4,8 +4,6 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.media.Image;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -17,12 +15,11 @@ import android.widget.Toast;
 
 import java.util.List;
 
-import e.sky64.retrofit_practice.Activities.CourseActivity;
+import e.sky64.retrofit_practice.Activities.CourseDetailActivity;
 import e.sky64.retrofit_practice.Activities.CourseListActivity;
 import e.sky64.retrofit_practice.Activities.EditCourseActivity;
 import e.sky64.retrofit_practice.Api.Api;
 import e.sky64.retrofit_practice.DataPackage.Course;
-import e.sky64.retrofit_practice.DataPackage.Courses;
 import e.sky64.retrofit_practice.DataPackage.Result;
 import e.sky64.retrofit_practice.R;
 import retrofit2.Call;
@@ -198,7 +195,7 @@ public class CourseListAdapter extends BaseAdapter {
         @Override
         public void onClick(View view) {
             int position = Integer.parseInt(view.getTag().toString());
-            Intent intent = new Intent(context, CourseActivity.class);
+            Intent intent = new Intent(context, CourseDetailActivity.class);
             intent.putExtra("course_no", courseList.get(position).getCourseNo());
             context.startActivity(intent);
         }
