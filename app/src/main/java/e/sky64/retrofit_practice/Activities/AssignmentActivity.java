@@ -7,9 +7,11 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -45,14 +47,16 @@ public class AssignmentActivity extends AppCompatActivity {
     AssignmentListViewAdapter adapter;
     AssignmentTextViewAdapter adapterContent;
 
+    private String course_no;
+
     private static String TAG = "phpquerytest";
     private static final String TAG_JSON="homework";
     private static final String TAG_NAME="hw_name";
     private static final String TAG_CONTENT ="hw_content";
     private static final String TAG_DUE ="hw_due";
 
-    //FileUploadActivity로 넘어가는 버튼
-    private Button uploadButton;
+    //FileUploadActivity로 넘어가는 버튼, 관리자 과제 수정, 관리자 과제 삭제
+    private Button uploadButton,editBtn,deleteBtn;
 
     android.support.v7.app.ActionBar mActionBar;
 
@@ -65,6 +69,10 @@ public class AssignmentActivity extends AppCompatActivity {
         //뒤로 가기 버튼 추가
 //        mActionBar = getSupportActionBar();
 //        mActionBar.setDisplayHomeAsUpEnabled(true);
+
+        Intent intent = getIntent();
+        course_no = intent.getStringExtra("hw_no");
+        Toast.makeText(AssignmentActivity.this,course_no, Toast.LENGTH_SHORT).show();
 
         asListView = (ListView) findViewById(R.id.ListView);
         texts = (TextView) findViewById(R.id.textView);
@@ -83,6 +91,14 @@ public class AssignmentActivity extends AppCompatActivity {
             }
         });
 
+        editBtn = (Button) findViewById(R.id.btn_edit);
+        editBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+        deleteBtn = (Button) findViewById(R.id.btn_delete);
 
     }
 

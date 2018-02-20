@@ -7,16 +7,13 @@ import e.sky64.retrofit_practice.DataPackage.AssignmentList;
 import e.sky64.retrofit_practice.DataPackage.Board;
 import e.sky64.retrofit_practice.DataPackage.Course;
 import e.sky64.retrofit_practice.DataPackage.Courses;
-import e.sky64.retrofit_practice.DataPackage.LoginRequest;
 import e.sky64.retrofit_practice.DataPackage.Result;
 import e.sky64.retrofit_practice.DataPackage.Users;
 import retrofit2.Call;
-import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
-import retrofit2.http.Query;
 
 /**
  * Created by sky64 on 2018-02-18.
@@ -35,14 +32,22 @@ public interface Api {
     //과제 리스트 읽어오기
     @FormUrlEncoded
     @POST("get_assignment_list.php")
-    Call<List<AssignmentList>> getAssignments(@Field("course_no") String course_no);
+    Call<List<AssignmentList>> getAssignments(@Field("course_no") int course_no);
 
     //-----관리자--------
     //1. 과제등록
+//    @FormUrlEncoded
+//    @POST("add_assignment.php")
+//    Call <List<Result>> addAssignment(
+//            @Field("hw_name") String hw_name, @Field("hw_content") String hw_content, @Field("hw_due") String hw_due
+//    );
     @FormUrlEncoded
-    @POST("add_assignment.php")
-    Call <List<Result>> addAssignment(
-            @Field("course_no") String course_no, @Field("hw_name") String hw_name, @Field("hw_content") String hw_content, @Field("hw_due") String hw_due);
+    @POST("uxmlab_course_add.php")
+    Call<List<Result>> addAssignment(@Field("course_no") int course_no,
+            @Field("hw_name") String hw_name,
+                                     @Field("hw_content") String hw_content,
+                                     @Field("hw_due") String hw_due);
+
 
     //2. 과제 수정시 과제 데이터 가져오기
     @FormUrlEncoded

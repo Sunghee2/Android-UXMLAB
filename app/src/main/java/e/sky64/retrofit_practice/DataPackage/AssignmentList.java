@@ -8,45 +8,65 @@ import com.google.gson.annotations.SerializedName;
  */
 
 public class AssignmentList {
-    @SerializedName("courseNo")
+
+
+    @SerializedName("course_no")
     @Expose
-    private String courseNo;
+    private String course_no;
+    public String getHw_no() {
+        return hw_no;
+    }
 
-    @SerializedName("asName")
+    public void setHw_no(String hw_no) {
+        this.hw_no = hw_no;
+    }
+
+    @SerializedName("hw_no")
     @Expose
-    private String asName;
 
-    @SerializedName("asDue")
+    private String hw_no;
+
+    @SerializedName("hw_name")
     @Expose
-    private String asDue;
+    private String hw_name;
 
-    public AssignmentList(String asName, String asDue) {
-//        this.courseNo = courseNo;
-        this.asName = asName;
-        this.asDue = asDue;
+    @SerializedName("hw_due")
+    @Expose
+    private String hw_due;
+
+    @SerializedName("result")
+    @Expose
+    private int result;
+
+    public int getResult() {
+        return result;
     }
 
-    public String getCourseNo() {
-        return courseNo;
+    public void setResult(int result) {
+        this.result = result;
     }
 
-    public void setCourseNo(String courseNo) {
-        this.courseNo = courseNo;
+    public String getCourse_no() {
+        return course_no;
     }
 
-    public String getAsName() {
-        return asName;
+    public void setCourse_no(String course_no) {
+        this.course_no = course_no;
     }
 
-    public void setAsName(String asName) {
-        this.asName = asName;
+    public String getHw_name() {
+        return hw_name;
     }
 
-    public String getAsDue() {
-        return asDue;
+    public void setHw_name(String hw_name) {
+        this.hw_name = hw_name;
     }
 
-    public void setAsDue(String asDue) {
-        this.asDue = asDue;
+    public String getHw_due() {
+        return hw_due;
+    }
+
+    public void setHw_due(String hw_due) {
+        this.hw_due = hw_due;
     }
 }

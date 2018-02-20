@@ -8,19 +8,79 @@ import com.google.gson.annotations.SerializedName;
  */
 
 public class Assignment {
-    @SerializedName("courseNo")
-    @Expose
-    private String courseNo;
+    public int getCourse_no() {
+        return course_no;
+    }
 
-    @SerializedName("asName")
-    @Expose
-    private String asName;
+    public void setCourse_no(int course_no) {
+        this.course_no = course_no;
+    }
 
-    @SerializedName("asContent")
+    @SerializedName("course_no")
     @Expose
-    private String asContent;
+    private int course_no;
 
-    @SerializedName("asDue")
+    public String getHw_no() {
+        return hw_no;
+    }
+
+    public void setHw_no(String hw_no) {
+        this.hw_no = hw_no;
+    }
+
+    @SerializedName("hw_no")
     @Expose
-    private String asDue;
+
+    private String hw_no;
+
+
+    @SerializedName("hw_name")
+    @Expose
+    private String hw_name;
+
+    @SerializedName("hw_content")
+    @Expose
+    private String hw_content;
+
+    @SerializedName("hw_due")
+    @Expose
+    private String hw_due;
+
+    @SerializedName("result")
+    @Expose
+    private int result;
+
+    public int getResult() {
+        return result;
+    }
+
+    public void setResult(int result) {
+        this.result = result;
+    }
+
+
+
+    public String getHw_name() {
+        return hw_name;
+    }
+
+    public void setHw_name(String hw_name) {
+        this.hw_name = hw_name;
+    }
+
+    public String getHw_content() {
+        return hw_content;
+    }
+
+    public void setHw_content(String hw_content) {
+        this.hw_content = hw_content;
+    }
+
+    public String getHw_due() {
+        return hw_due;
+    }
+
+    public void setHw_due(String hw_due) {
+        this.hw_due = hw_due;
+    }
 }

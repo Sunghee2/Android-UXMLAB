@@ -203,7 +203,6 @@ public class CourseDetailActivity extends AppCompatActivity {
                 } else if (position == 1) { //두번째 리스트를 클릭하면 과제를 보여주는 페이지로 넘어가게 된다.
                     Intent intent = new Intent(getApplicationContext(), AssignmentListActivity.class);
                     intent.putExtra("course_number", course_no);
-                    Toast.makeText(getApplicationContext(), "학생 과제-> 승연이", Toast.LENGTH_SHORT).show();
                     startActivity(intent);
 
 

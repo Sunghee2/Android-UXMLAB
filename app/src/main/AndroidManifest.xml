@@ -28,6 +28,7 @@
         <activity android:name=".Activities.EditAssignmentActivity" />
         <activity android:name=".Activities.AssignmentListActivity"/>
         <activity android:name=".Activities.NoticeActivity" />
+        <activity android:name=".Activities.NoticeWriteActivity"/>
 
     </application>
 
