@@ -8,38 +8,21 @@ import com.google.firebase.iid.FirebaseInstanceIdService;
 /**
  * Created by hh960 on 2018-02-20.
  */
-
+//FCM을 통한 푸시 알림 구현
 public class FirebaseInstanceIDService  extends FirebaseInstanceIdService {
 
     private static final String TAG = "MyFirebaseIIDService";
 
-    /**
-     * Called if InstanceID token is updated. This may occur if the security of
-     * the previous token had been compromised. Note that this is called when the InstanceID token
-     * is initially generated so this is where you would retrieve the token.
-     */
-    // [START refresh_token]
     @Override
     public void onTokenRefresh() {
-        // Get updated InstanceID token.
+        // 업데이트된 인스턴스ID 토큰을 가져온다. 이 토큰을 내 서버로 보내면 더 많은 기능 구현 가능
         String refreshedToken = FirebaseInstanceId.getInstance().getToken();
         Log.d(TAG, "Refreshed token: " + refreshedToken);
 
-        // If you want to send messages to this application instance or
-        // manage this apps subscriptions on the server side, send the
-        // Instance ID token to your app server.
         sendRegistrationToServer(refreshedToken);
     }
-    // [END refresh_token]
 
-    /**
-     * Persist token to third-party servers.
-     *
-     * Modify this method to associate the user's FCM InstanceID token with any server-side account
-     * maintained by your application.
-     *
-     * @param token The new token.
-     */
+    //토큰을 내 서버로 보내는 메소드 (추후 구현)
     private void sendRegistrationToServer(String token) {
         // TODO: Implement this method to send token to your app server.
     }

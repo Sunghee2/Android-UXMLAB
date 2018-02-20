@@ -23,7 +23,7 @@ import retrofit2.http.Query;
 public interface Api {
     // 접속 ip 및 URL 지정
     //String BASE_URL = "http://10.0.2.2:8080/";
-    String BASE_URL = "http://192.168.33.25/";
+    String BASE_URL = "http://192.168.123.108/";
 
     // 강의 리스트
     @FormUrlEncoded

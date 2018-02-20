@@ -16,64 +16,45 @@ import com.google.firebase.messaging.RemoteMessage;
 import e.sky64.retrofit_practice.Activities.LoginActivity;
 import e.sky64.retrofit_practice.R;
 
-
+//FCM을 통한 푸시 알림 구현. 메세지를 받게 되었을 경우, 이 자바 클래스 실행
 public class FirebaseMessagingService extends com.google.firebase.messaging.FirebaseMessagingService {
 
     private static final String TAG = "FirebaseMsgService";
 
     private String msg;
 
-    /**
-     * Called when message is received.
-     *
-     * @param remoteMessage Object representing the message received from Firebase Cloud Messaging.
-     */
-    // [START receive_message]
+    //메세지를 받았을 경우 실행되는 메소드
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
-        // [START_EXCLUDE]
-        // There are two types of messages data messages and notification messages. Data messages are handled
-        // here in onMessageReceived whether the app is in the foreground or background. Data messages are the type
-        // traditionally used with GCM. Notification messages are only received here in onMessageReceived when the app
-        // is in the foreground. When the app is in the background an automatically generated notification is displayed.
-        // When the user taps on the notification they are returned to the app. Messages containing both notification
-        // and data payloads are treated as notification messages. The Firebase console always sends notification
-        // messages. For more see: https://firebase.google.com/docs/cloud-messaging/concept-options
-        // [END_EXCLUDE]
-
-        // TODO(developer): Handle FCM messages here.
-        // Not getting messages here? See why this may be: https://goo.gl/39bRNJ
+        //어디에서 받았는지 로그로 확인 가능
         Log.d(TAG, "From: " + remoteMessage.getFrom());
 
-        // Check if message contains a data payload.
+        // 메세지에 담긴 데이터 확인 가능
         if (remoteMessage.getData().size() > 0) {
             Log.d(TAG, "Message data payload: " + remoteMessage.getData());
         }
 
-        // Check if message contains a notification payload.
+
         if (remoteMessage.getNotification() != null) {
             Log.d(TAG, "Message Notification Body: " + remoteMessage.getNotification().getBody());
         }
-
+        //메세지의 body를 갖고온다 이것이 우리가 흔히 보게 되는 메세지
         msg = remoteMessage.getNotification().getBody();
 
-        // Also if you intend on generating your own notifications as a result of a received FCM
-        // message, here is where that should be initiated. See sendNotification method below.
-
-        // [END receive_message]
-
+        //만약 푸시알림 내용을 클릭하였을 때, 앱의 LoginActivity로 이동
         Intent intent = new Intent(this, LoginActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 
         PendingIntent contentIntent = PendingIntent.getActivity(this, 0,
                 new Intent(this, LoginActivity.class), 0);
 
-        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this).setSmallIcon(R.mipmap.ic_launcher)
-                .setContentTitle("FCM")
-                .setContentText(msg)
+        //푸시 알림 내용 정의
+        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this).setSmallIcon(R.mipmap.ic_launcher) //아이콘 지정
+                .setContentTitle("UXMLAB알림")  //제목 지정
+                .setContentText(msg)        //내용 지정
                 .setAutoCancel(true)
-                .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
-                .setVibrate(new long[]{1, 1000});
+                .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)) //알림 소리 지정
+                .setVibrate(new long[]{1, 1000}); //알림 진동 지정
 
         NotificationManager notificationManager =
                 (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);

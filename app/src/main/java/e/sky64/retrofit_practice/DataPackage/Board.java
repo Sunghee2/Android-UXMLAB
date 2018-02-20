@@ -6,7 +6,7 @@ import com.google.gson.annotations.SerializedName;
  * Created by hh960 on 2018-02-20.
  */
 
-public class Board {
+public class Board {  //강의의 세부사항 목록 보여줄 때 필요한 데이터 관리 클래스
 
 
     @SerializedName("board_title")

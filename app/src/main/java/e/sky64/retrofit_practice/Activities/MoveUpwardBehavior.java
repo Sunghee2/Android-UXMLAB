@@ -7,7 +7,11 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.view.ViewCompat;
 import android.util.AttributeSet;
 import android.view.View;
-//Use this class only if you want toslide up the FAB whenever the seekbar appear, if u don't want this funcionality delete this file
+
+/**
+ * Created by hh960 on 2018-02-20.
+ */
+//펼쳐지는 FloatingButton을 구현하기 위해 필요한 메소드 모음
 public class MoveUpwardBehavior extends CoordinatorLayout.Behavior<View> {
     public MoveUpwardBehavior() {
         super();
@@ -29,11 +33,8 @@ public class MoveUpwardBehavior extends CoordinatorLayout.Behavior<View> {
         return true;
     }
 
-    //you need this when you swipe the snackbar(thanx to ubuntudroid's comment)
     public void onDependentViewRemoved(CoordinatorLayout parent, View child, View dependency) {
         ViewCompat.animate(child).translationY(0).start();
     }
-}/**
- * Created by hh960 on 2018-02-20.
- */
+}
 
