@@ -2,6 +2,8 @@ package e.sky64.retrofit_practice.Api;
 
 import java.util.List;
 
+import e.sky64.retrofit_practice.DataPackage.Assignment;
+import e.sky64.retrofit_practice.DataPackage.AssignmentList;
 import e.sky64.retrofit_practice.DataPackage.Board;
 import e.sky64.retrofit_practice.DataPackage.Course;
 import e.sky64.retrofit_practice.DataPackage.Courses;
@@ -22,8 +24,39 @@ import retrofit2.http.Query;
 // Api 정의
 public interface Api {
     // 접속 ip 및 URL 지정
+
     //String BASE_URL = "http://10.0.2.2:8080/";
-    String BASE_URL = "http://192.168.123.108/";
+//    String BASE_URL = "http://192.168.123.108/";
+
+    //이승연IP
+    String BASE_URL = "http://10.0.2.2/~seungyeonlee/";
+
+    //과제 PART
+    //과제 리스트 읽어오기
+    @FormUrlEncoded
+    @POST("get_assignment_list.php")
+    Call<List<AssignmentList>> getAssignments(@Field("course_no") String course_no);
+
+    //-----관리자--------
+    //1. 과제등록
+    @FormUrlEncoded
+    @POST("add_assignment.php")
+    Call <List<Result>> addAssignment(
+            @Field("course_no") String course_no, @Field("hw_name") String hw_name, @Field("hw_content") String hw_content, @Field("hw_due") String hw_due);
+
+    //2. 과제 수정시 과제 데이터 가져오기
+    @FormUrlEncoded
+    @GET("get_assignment.php")
+    Call<List<Assignment>> readAssignment(@Field("hw_no") String hw_no);
+
+    //3. 관리자 과제 수정
+    @FormUrlEncoded
+    @POST("edit_assignment.php")
+    Call<List<Assignment>> editAssignment(@Field("origin_course_no") String origin_course_no,
+                                          @Field("hw_name") String hw_name,
+                                          @Field("hw_content") String hw_content,
+                                          @Field("hw_due") String hw_due);
+
 
     // 강의 리스트
     @FormUrlEncoded
@@ -59,15 +92,6 @@ public interface Api {
     @FormUrlEncoded
     @POST("uxmlab_course_register.php")
     Call<List<Result>> registerCourse(@Field("course_key") String course_key, @Field("course_no") String course_no, @Field("id") int id);
-
-
-    //과제
-    //과제등록
-    @FormUrlEncoded
-    @POST("add_assignment.php")
-    Call <List<Result>> addAssignment(
-            @Field("hw_name") String hw_name, @Field("hw_content") String hw_content, @Field("hw_due") String hw_due
-    );
 
 
     //공지사항 쓰기

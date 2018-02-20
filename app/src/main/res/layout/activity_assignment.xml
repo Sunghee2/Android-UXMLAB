@@ -3,23 +3,24 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    tools:context="e.sky64.retrofit_practice.Activities.AssignmentActivity">
 
     <ListView
         android:id="@+id/ListView"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="130dp"
         android:layout_marginTop="14dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/content" >
+        app:layout_constraintTop_toBottomOf="@+id/content">
 
     </ListView>
 
     <ScrollView
         android:id="@+id/content"
-        android:layout_width="368dp"
+        android:layout_width="304dp"
         android:layout_height="219dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
@@ -36,7 +37,7 @@
 
             <TextView
                 android:id="@+id/textView"
-                android:layout_width="352dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="TextView"
                 android:textSize="18sp"
@@ -44,5 +45,17 @@
                 tools:layout_editor_absoluteY="0dp" />
         </LinearLayout>
     </ScrollView>
+
+    <Button
+        android:id="@+id/button3"
+        android:layout_width="368dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:text="제출하기"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ListView" />
+
 
 </android.support.constraint.ConstraintLayout>

@@ -14,6 +14,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import e.sky64.retrofit_practice.DataPackage.Course;
 import e.sky64.retrofit_practice.GlobalUserApplication;
 import e.sky64.retrofit_practice.R;
 
@@ -156,13 +157,14 @@ public class CourseDetailActivity extends AppCompatActivity {
                     startActivity(intent);
                 }
             });
-            //fab2버튼은 과제 작성 페이지로 넘어가게 된다.
+            //fab2버튼은 과제 생성 페이지로 넘어가게 된다.
             fab2.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    Intent intent = new Intent(CourseDetailActivity.this,AddAssignmentActivity.class);
+                    intent.putExtra("course_number",course_no);
+                    startActivity(intent);
 
-
-                    Toast.makeText(getApplicationContext(), "과제 작성 페이지로 이동(승연)", Toast.LENGTH_SHORT).show();
 
                 }
             });
@@ -199,7 +201,12 @@ public class CourseDetailActivity extends AppCompatActivity {
                     intent.putExtra("course_number", course_no);
                     startActivity(intent);
                 } else if (position == 1) { //두번째 리스트를 클릭하면 과제를 보여주는 페이지로 넘어가게 된다.
-                    Toast.makeText(getApplicationContext(), "과제-> 승연이", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(getApplicationContext(), AssignmentListActivity.class);
+                    intent.putExtra("course_number", course_no);
+                    Toast.makeText(getApplicationContext(), "학생 과제-> 승연이", Toast.LENGTH_SHORT).show();
+                    startActivity(intent);
+
+
                 } else { //세번째 리스트를 클릭하면 자료를 다운받을 수 있는 페이지로 넘어가게 된다.
                     Toast.makeText(getApplicationContext(), "강의 자료 다운", Toast.LENGTH_SHORT).show();
                 }
