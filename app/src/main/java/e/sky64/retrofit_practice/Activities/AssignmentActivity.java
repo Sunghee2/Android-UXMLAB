@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
-import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -26,11 +25,11 @@ import java.util.ArrayList;
 
 import e.sky64.retrofit_practice.Adapters.AssignmentListViewAdapter;
 import e.sky64.retrofit_practice.Adapters.AssignmentTextViewAdapter;
+import e.sky64.retrofit_practice.GlobalUserApplication;
 import e.sky64.retrofit_practice.R;
 
 
 public class AssignmentActivity extends AppCompatActivity {
-
 
     //하단 리스트뷰
     ListView asListView;
@@ -47,7 +46,8 @@ public class AssignmentActivity extends AppCompatActivity {
     AssignmentListViewAdapter adapter;
     AssignmentTextViewAdapter adapterContent;
 
-    private String course_no;
+    private String hw_no;
+    int is_student;
 
     private static String TAG = "phpquerytest";
     private static final String TAG_JSON="homework";
@@ -71,8 +71,8 @@ public class AssignmentActivity extends AppCompatActivity {
 //        mActionBar.setDisplayHomeAsUpEnabled(true);
 
         Intent intent = getIntent();
-        course_no = intent.getStringExtra("hw_no");
-        Toast.makeText(AssignmentActivity.this,course_no, Toast.LENGTH_SHORT).show();
+        hw_no = intent.getStringExtra("hw_no");
+        Toast.makeText(AssignmentActivity.this,hw_no, Toast.LENGTH_SHORT).show();
 
         asListView = (ListView) findViewById(R.id.ListView);
         texts = (TextView) findViewById(R.id.textView);
@@ -91,14 +91,41 @@ public class AssignmentActivity extends AppCompatActivity {
             }
         });
 
-        editBtn = (Button) findViewById(R.id.btn_edit);
-        editBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        editBtn = (Button) findViewById(R.id.btn_delete);
+        deleteBtn = (Button) findViewById(R.id.btn_edit);
 
-            }
-        });
-        deleteBtn = (Button) findViewById(R.id.btn_delete);
+
+        GlobalUserApplication userApplication = (GlobalUserApplication) getApplication();
+        is_student=userApplication.getIsStudent();
+
+        if(is_student==0){  //만약 교수님인 경우
+            editBtn.setVisibility(View.VISIBLE);
+            deleteBtn.setVisibility(View.VISIBLE);
+
+            editBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    Intent intent = new Intent(AssignmentActivity.this,EditAssignmentActivity.class);
+                    intent.putExtra("hw_no",hw_no);
+                    startActivity(intent);
+
+                }
+            });
+
+            deleteBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                }
+            });
+
+
+        }else{  //만약 학생인 경우
+            editBtn.setVisibility(View.INVISIBLE);
+            deleteBtn.setVisibility(View.INVISIBLE);
+
+        }
 
     }
 

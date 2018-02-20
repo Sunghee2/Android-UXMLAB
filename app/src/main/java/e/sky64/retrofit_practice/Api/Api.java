@@ -28,7 +28,7 @@ public interface Api {
     //이승연IP
     String BASE_URL = "http://10.0.2.2/~seungyeonlee/";
 
-    //과제 PART
+    //과제
     //과제 리스트 읽어오기
     @FormUrlEncoded
     @POST("get_assignment_list.php")
@@ -52,12 +52,12 @@ public interface Api {
     //2. 과제 수정시 과제 데이터 가져오기
     @FormUrlEncoded
     @GET("get_assignment.php")
-    Call<List<Assignment>> readAssignment(@Field("hw_no") String hw_no);
+    Call<List<Assignment>> readAssignment(@Field("hw_no") int hw_no);
 
     //3. 관리자 과제 수정
     @FormUrlEncoded
     @POST("edit_assignment.php")
-    Call<List<Assignment>> editAssignment(@Field("origin_course_no") String origin_course_no,
+    Call<List<Result>> editAssignment(
                                           @Field("hw_name") String hw_name,
                                           @Field("hw_content") String hw_content,
                                           @Field("hw_due") String hw_due);
