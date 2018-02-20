@@ -30,6 +30,18 @@ public class AssignmentList {
     @Expose
     private String hw_name;
 
+    public String getHw_content() {
+        return hw_content;
+    }
+
+    public void setHw_content(String hw_content) {
+        this.hw_content = hw_content;
+    }
+
+    @SerializedName("hw_content")
+    @Expose
+    private String hw_content;
+
     @SerializedName("hw_due")
     @Expose
     private String hw_due;

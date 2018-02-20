@@ -17,6 +17,9 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 import java.util.Calendar;
 import java.util.List;
 
@@ -150,9 +153,13 @@ public class EditAssignmentActivity extends AppCompatActivity {
     }
 
     private void editAssignment(String hw_name, String hw_content, String hw_due) {
+        // Gson object를 만들어서 Json을 읽어와서 Gson으로 해석할 수 있도록 함
+        Gson gson = new GsonBuilder()
+                .setLenient()
+                .create();
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(Api.BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create(gson))
                 .build();
 
         Api api = retrofit.create(Api.class);

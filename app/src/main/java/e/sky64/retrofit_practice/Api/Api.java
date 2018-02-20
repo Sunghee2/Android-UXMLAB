@@ -34,6 +34,11 @@ public interface Api {
     @POST("get_assignment_list.php")
     Call<List<AssignmentList>> getAssignments(@Field("course_no") int course_no);
 
+    //과제 상세 정보
+    @FormUrlEncoded
+    @POST("get_assignment_info.php")
+    Call<List<AssignmentList>> getAssignmentInfo(@Field("hw_no") int hw_no);
+
     //-----관리자--------
     //1. 과제등록
 //    @FormUrlEncoded
@@ -61,6 +66,7 @@ public interface Api {
                                           @Field("hw_name") String hw_name,
                                           @Field("hw_content") String hw_content,
                                           @Field("hw_due") String hw_due);
+
 
 
     // 강의 리스트
