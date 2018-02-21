@@ -2,7 +2,6 @@ package e.sky64.retrofit_practice.Api;
 
 import java.util.List;
 
-import e.sky64.retrofit_practice.DataPackage.Assignment;
 import e.sky64.retrofit_practice.DataPackage.AssignmentList;
 import e.sky64.retrofit_practice.DataPackage.Board;
 import e.sky64.retrofit_practice.DataPackage.Course;
@@ -12,7 +11,6 @@ import e.sky64.retrofit_practice.DataPackage.Users;
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
-import retrofit2.http.GET;
 import retrofit2.http.POST;
 
 /**
@@ -51,12 +49,12 @@ public interface Api {
     //2. 과제 수정시 과제 데이터 가져오기
     @FormUrlEncoded
     @POST("edit_read_assignment.php")
-    Call<List<Assignment>> readAssignment(@Field("hw_no") int hw_no);
+    Call<List<AssignmentList>> readAssignment(@Field("hw_no") int hw_no);
 
     //3. 관리자 과제 수정 업데이트
     @FormUrlEncoded
     @POST("edit_assignment.php")
-    Call<List<Assignment>> editAssignment(
+    Call<List<AssignmentList>> editAssignment(
             @Field("hw_no") String hw_no,
             @Field("hw_name") String hw_name,
             @Field("hw_content") String hw_content,

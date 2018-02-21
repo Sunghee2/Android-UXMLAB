@@ -1,7 +1,6 @@
 package e.sky64.retrofit_practice.Activities;
 
 
-import android.app.ActionBar;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
@@ -11,7 +10,6 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.format.DateFormat;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -25,7 +23,6 @@ import java.util.Calendar;
 import java.util.List;
 
 import e.sky64.retrofit_practice.Api.Api;
-import e.sky64.retrofit_practice.DataPackage.Assignment;
 import e.sky64.retrofit_practice.DataPackage.Result;
 import e.sky64.retrofit_practice.R;
 import retrofit2.Call;

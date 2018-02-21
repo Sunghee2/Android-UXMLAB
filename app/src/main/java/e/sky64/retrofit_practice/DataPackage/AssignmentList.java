@@ -13,13 +13,6 @@ public class AssignmentList {
     @SerializedName("course_no")
     @Expose
     private String course_no;
-    public String getHw_no() {
-        return hw_no;
-    }
-
-    public void setHw_no(String hw_no) {
-        this.hw_no = hw_no;
-    }
 
     @SerializedName("hw_no")
     @Expose
@@ -29,14 +22,6 @@ public class AssignmentList {
     @SerializedName("hw_name")
     @Expose
     private String hw_name;
-
-    public String getHw_content() {
-        return hw_content;
-    }
-
-    public void setHw_content(String hw_content) {
-        this.hw_content = hw_content;
-    }
 
     @SerializedName("hw_content")
     @Expose
@@ -49,6 +34,21 @@ public class AssignmentList {
     @SerializedName("result")
     @Expose
     private int result;
+    public String getHw_no() {
+        return hw_no;
+    }
+
+    public void setHw_no(String hw_no) {
+        this.hw_no = hw_no;
+    }
+
+    public String getHw_content() {
+        return hw_content;
+    }
+
+    public void setHw_content(String hw_content) {
+        this.hw_content = hw_content;
+    }
 
     public int getResult() {
         return result;

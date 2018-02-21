@@ -1,34 +1,21 @@
 package e.sky64.retrofit_practice.Activities;
 
-import android.app.AlertDialog;
-import android.app.DatePickerDialog;
-import android.app.Dialog;
 import android.app.DialogFragment;
-import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.format.DateFormat;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.TextView;
-import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-import java.util.Calendar;
 import java.util.List;
 
 import e.sky64.retrofit_practice.Api.Api;
-import e.sky64.retrofit_practice.DataPackage.Assignment;
 import e.sky64.retrofit_practice.DataPackage.AssignmentList;
-import e.sky64.retrofit_practice.DataPackage.Course;
-import e.sky64.retrofit_practice.DataPackage.Result;
 import e.sky64.retrofit_practice.R;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -44,7 +31,7 @@ public class EditAssignmentActivity extends AppCompatActivity {
 
     //마감 날짜, 시간, 과제 등록
     private Button btnDatePicker, btnTimePicker, btnAddAssignment;
-    List<Assignment> assignment;
+    List<AssignmentList> assignment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -106,11 +93,11 @@ public class EditAssignmentActivity extends AppCompatActivity {
 
         Api api = retrofit.create(Api.class);
 
-        Call<List<Assignment>> call = api.readAssignment(hw_no);
+        Call<List<AssignmentList>> call = api.readAssignment(hw_no);
 
-        call.enqueue(new Callback<List<Assignment>>() {
+        call.enqueue(new Callback<List<AssignmentList>>() {
             @Override
-            public void onResponse(Call<List<Assignment>> call, Response<List<Assignment>> response) {
+            public void onResponse(Call<List<AssignmentList>> call, Response<List<AssignmentList>> response) {
 
                 assignment = response.body();
                 //기한을 날짜와 시간으로 자름.
@@ -131,7 +118,7 @@ public class EditAssignmentActivity extends AppCompatActivity {
 
             // 실패시 처리하는 방법을 정하는 메서드
             @Override
-            public void onFailure(Call<List<Assignment>> call, Throwable t) {
+            public void onFailure(Call<List<AssignmentList>> call, Throwable t) {
                 Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
@@ -172,10 +159,10 @@ public class EditAssignmentActivity extends AppCompatActivity {
         Api api = retrofit.create(Api.class);
 
 
-        Call<List<Assignment>> call = api.editAssignment(hw_no,hw_name,hw_content,hw_due);
-        call.enqueue(new Callback<List<Assignment>>() {
+        Call<List<AssignmentList>> call = api.editAssignment(hw_no,hw_name,hw_content,hw_due);
+        call.enqueue(new Callback<List<AssignmentList>>() {
             @Override
-            public void onResponse(Call<List<Assignment>> call, Response<List<Assignment>> response) {
+            public void onResponse(Call<List<AssignmentList>> call, Response<List<AssignmentList>> response) {
                 //수정의 결과 받아오기
                 int result = response.body().get(0).getResult();
                 if(result==0) { // 수정 실패
@@ -188,7 +175,7 @@ public class EditAssignmentActivity extends AppCompatActivity {
 
             // 실패시 처리하는 방법을 정하는 메서드
             @Override
-            public void onFailure(Call<List<Assignment>> call, Throwable t) {
+            public void onFailure(Call<List<AssignmentList>> call, Throwable t) {
                 Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_LONG).show();
 
             }

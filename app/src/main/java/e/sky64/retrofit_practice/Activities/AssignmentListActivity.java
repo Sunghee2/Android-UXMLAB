@@ -42,9 +42,11 @@ public class AssignmentListActivity extends AppCompatActivity {
         //과제명과 과제 기한을 받아온다.
         getAssignments();
 
+        //각 리스트를 선택했을 때
         asListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                //과제 상세페이지(AssignmentActivity)에 intent로 hw_no를 보내주고 이동.
                 Intent intent = new Intent(AssignmentListActivity.this, AssignmentActivity.class);
                 intent.putExtra("hw_no", String.valueOf(asList.get(position).getHw_no()));
                 startActivity(intent);
@@ -52,7 +54,7 @@ public class AssignmentListActivity extends AppCompatActivity {
         });
     }
 
-
+    //과제명, 과제 기한을 받아옴.
     private void getAssignments() {
 
         Retrofit retrofit = new Retrofit.Builder()
@@ -79,6 +81,7 @@ public class AssignmentListActivity extends AppCompatActivity {
                     as[i] = "과제명: "+name +
                             "\n\n기한: " + due + "\n";
                 }
+                //어댑터를 이용하여 리스트뷰에 뿌려준다.
                 asListView.setAdapter(new ArrayAdapter<String>(AssignmentListActivity.this, android.R.layout.simple_list_item_1, as));
             }
             @Override
