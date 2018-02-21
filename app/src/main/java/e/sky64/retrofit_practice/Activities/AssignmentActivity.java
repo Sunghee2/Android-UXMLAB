@@ -34,16 +34,9 @@ public class AssignmentActivity extends AppCompatActivity {
 
     //과제 본문 내용 TextView
     TextView texts;
-    TextView texts2;
 
     private String hw_no;
     int is_student;
-
-    private static String TAG = "phpquerytest";
-    private static final String TAG_JSON="homework";
-    private static final String TAG_NAME="hw_name";
-    private static final String TAG_CONTENT ="hw_content";
-    private static final String TAG_DUE ="hw_due";
 
     //FileUploadActivity로 넘어가는 버튼, 관리자 과제 수정
     private Button uploadButton,editBtn;
@@ -60,14 +53,14 @@ public class AssignmentActivity extends AppCompatActivity {
         mActionBar = (Toolbar) findViewById(R.id.toolbar2);
         setSupportActionBar(mActionBar);
 
-
+        //hw_no 받아옴.
         Intent intent = getIntent();
         hw_no = intent.getStringExtra("hw_no");
-        Toast.makeText(AssignmentActivity.this,hw_no, Toast.LENGTH_SHORT).show();
 
         asListView = (ListView) findViewById(R.id.ListView);
         texts = (TextView) findViewById(R.id.textView);
 
+        //과제 제출 버튼
         uploadButton = (Button) findViewById(R.id.button3);
         uploadButton.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -80,8 +73,10 @@ public class AssignmentActivity extends AppCompatActivity {
 
         editBtn = (Button) findViewById(R.id.btn_delete);
 
+        //과제정보 받아옴
         getAssignmentInfo();
 
+        //글로벌...
         GlobalUserApplication userApplication = (GlobalUserApplication) getApplication();
         is_student=userApplication.getIsStudent();
 
@@ -106,6 +101,7 @@ public class AssignmentActivity extends AppCompatActivity {
         }
 
     }
+    //과제 정보 받아오는 함수.
     private void getAssignmentInfo() {
         // Gson object
         Gson gson = new GsonBuilder()
@@ -130,7 +126,6 @@ public class AssignmentActivity extends AppCompatActivity {
                 content = asList.get(0).getHw_content();
                 due = asList.get(0).getHw_due();
 
-//                texts.setText(name);
                 texts.setText(content);
                 setSupportActionBar(mActionBar);
                 getSupportActionBar().setTitle(name);
@@ -143,7 +138,8 @@ public class AssignmentActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<List<AssignmentList>> call, Throwable t) { //만약 db에서 데이터 갖고오는 것을 실패하였을 경우
+            public void onFailure(Call<List<AssignmentList>> call, Throwable t) {
+                //만약 db에서 데이터 갖고오는 것을 실패하였을 경우 에러메세지를 토스트로 출력
                 Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });

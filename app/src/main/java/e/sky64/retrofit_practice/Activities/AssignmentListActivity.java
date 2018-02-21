@@ -20,7 +20,9 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+//과제 리스트 뷰
 public class AssignmentListActivity extends AppCompatActivity {
+    //리스트뷰
     ListView asListView;
     String course_no;
     List<AssignmentList> asList;
@@ -35,9 +37,9 @@ public class AssignmentListActivity extends AppCompatActivity {
         Intent intent = getIntent();
         course_no = intent.getStringExtra("course_number");
 
-//        Toast.makeText(AssignmentListActivity.this,course_no, Toast.LENGTH_SHORT).show();
-
         asListView = (ListView) findViewById(R.id.asListView);
+
+        //과제명과 과제 기한을 받아온다.
         getAssignments();
 
         asListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -49,7 +51,6 @@ public class AssignmentListActivity extends AppCompatActivity {
             }
         });
     }
-
 
 
     private void getAssignments() {
@@ -75,7 +76,7 @@ public class AssignmentListActivity extends AppCompatActivity {
                 for (int i = 0; i < asList.size(); i++) {
                     name = asList.get(i).getHw_name();
                     due = asList.get(i).getHw_due();
-                    as[i] = name +
+                    as[i] = "과제명: "+name +
                             "\n\n기한: " + due + "\n";
                 }
                 asListView.setAdapter(new ArrayAdapter<String>(AssignmentListActivity.this, android.R.layout.simple_list_item_1, as));

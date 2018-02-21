@@ -46,9 +46,6 @@ public class EditAssignmentActivity extends AppCompatActivity {
     private Button btnDatePicker, btnTimePicker, btnAddAssignment;
     List<Assignment> assignment;
 
-    private String course_no;
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -116,7 +113,7 @@ public class EditAssignmentActivity extends AppCompatActivity {
             public void onResponse(Call<List<Assignment>> call, Response<List<Assignment>> response) {
 
                 assignment = response.body();
-                //기한을 날짜와 시간으로 자름
+                //기한을 날짜와 시간으로 자름.
                 String[] as;
                 String date,time;
                 String dueAndTime = assignment.get(0).getHw_due();
@@ -129,7 +126,7 @@ public class EditAssignmentActivity extends AppCompatActivity {
                 asContent.setText(assignment.get(0).getHw_content());
                 inDate.setText(date);
                 inTime.setText(time);
-                course_no = Integer.toString(assignment.get(0).getCourse_no());
+
             }
 
             // 실패시 처리하는 방법을 정하는 메서드
@@ -174,9 +171,6 @@ public class EditAssignmentActivity extends AppCompatActivity {
 
         Api api = retrofit.create(Api.class);
 
-        Log.e("dsafasdf", hw_name);
-        Log.e("dsafasdf", hw_content);
-        Log.e("dsafasdf", hw_due);
 
         Call<List<Assignment>> call = api.editAssignment(hw_no,hw_name,hw_content,hw_due);
         call.enqueue(new Callback<List<Assignment>>() {
