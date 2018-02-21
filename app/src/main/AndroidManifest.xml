@@ -29,6 +29,7 @@
         <activity android:name=".Activities.AssignmentListActivity"/>
         <activity android:name=".Activities.NoticeActivity" />
         <activity android:name=".Activities.NoticeWriteActivity"/>
+        <activity android:name=".Activities.FileUploadActivity"/>
 
     </application>
 

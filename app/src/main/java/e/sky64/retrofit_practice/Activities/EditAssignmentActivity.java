@@ -25,6 +25,7 @@ import java.util.List;
 
 import e.sky64.retrofit_practice.Api.Api;
 import e.sky64.retrofit_practice.DataPackage.Assignment;
+import e.sky64.retrofit_practice.DataPackage.AssignmentList;
 import e.sky64.retrofit_practice.DataPackage.Course;
 import e.sky64.retrofit_practice.DataPackage.Result;
 import e.sky64.retrofit_practice.R;
@@ -43,6 +44,8 @@ public class EditAssignmentActivity extends AppCompatActivity {
     //마감 날짜, 시간, 과제 등록
     private Button btnDatePicker, btnTimePicker, btnAddAssignment;
     Assignment assignment;
+//    List<Assignment> asList;
+//    Assignment assList;
 
 
     @Override
@@ -57,6 +60,8 @@ public class EditAssignmentActivity extends AppCompatActivity {
         asContent = (EditText) findViewById(R.id.asContent);
         inDate = (EditText) findViewById(R.id.in_date);
         inTime = (EditText) findViewById(R.id.in_time);
+
+        readAssignment(Integer.parseInt(hw_no));
 
         //마감 날짜 선택 버튼
         btnDatePicker = (Button)findViewById(R.id.btn_date);
@@ -83,17 +88,17 @@ public class EditAssignmentActivity extends AppCompatActivity {
         //과제 등록 버튼
         btnAddAssignment = (Button)findViewById(R.id.addAssignment);
         btnAddAssignment.setOnClickListener(new View.OnClickListener() {
-
-
             @Override
             public void onClick(View v) {
                 formChecker(v);
             }
         });
 
+
+
     }
 
-    // 강의 번호를 이용해서 강의 정보를 가져오는 함수
+    // 과제 번호로 과제의 다른 데이터를 가져옴
     private void readAssignment(int hw_no) {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(Api.BASE_URL)
@@ -107,17 +112,25 @@ public class EditAssignmentActivity extends AppCompatActivity {
         call.enqueue(new Callback<List<Assignment>>() {
             @Override
             public void onResponse(Call<List<Assignment>> call, Response<List<Assignment>> response) {
-                // 강의를 받아옴
                 assignment = response.body().get(0);
-
+//                assList = response.body().get(0);
                 //기한을 날짜와 시간으로 자름
-                String[] dueAndTime = assignment.getHw_due().split("\\s");
-                String due = dueAndTime[0];
-                String time = dueAndTime[1];
+
+                String[] as;
+                String due,time;
+
+                String dueAndTime = String.valueOf(assignment.getHw_due());
+                as = dueAndTime.split(" ");
+                due = as[0];
+                time = as[1];
+
+
+
+                Toast.makeText(EditAssignmentActivity.this,due,Toast.LENGTH_LONG).show();
 
                 //과제 정보 값을 가져와서 edittext에 넣음
                 asName.setText(assignment.getHw_name());
-                asContent.setText(assignment.getHw_content());
+                asContent.setText(assignment.getHw_name());
                 inDate.setText(due);
                 inTime.setText(time);
 
@@ -165,7 +178,6 @@ public class EditAssignmentActivity extends AppCompatActivity {
         Api api = retrofit.create(Api.class);
 
         Call<List<Result>> call = api.editAssignment(hw_name,hw_content,hw_due);
-
         call.enqueue(new Callback<List<Result>>() {
             @Override
             public void onResponse(Call<List<Result>> call, Response<List<Result>> response) {

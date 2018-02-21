@@ -3,6 +3,7 @@ package e.sky64.retrofit_practice.Activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
@@ -14,6 +15,7 @@ import com.google.gson.GsonBuilder;
 
 import java.util.List;
 
+import e.sky64.retrofit_practice.Adapters.AssignmentListViewAdapter;
 import e.sky64.retrofit_practice.Api.Api;
 import e.sky64.retrofit_practice.DataPackage.AssignmentList;
 import e.sky64.retrofit_practice.GlobalUserApplication;
@@ -32,9 +34,7 @@ public class AssignmentActivity extends AppCompatActivity {
 
     //과제 본문 내용 TextView
     TextView texts;
-
-//    //위의 TextView에 담길 과제 상세 내용
-//    private String contentText;
+    TextView texts2;
 
     private String hw_no;
     int is_student;
@@ -48,7 +48,7 @@ public class AssignmentActivity extends AppCompatActivity {
     //FileUploadActivity로 넘어가는 버튼, 관리자 과제 수정, 관리자 과제 삭제
     private Button uploadButton,editBtn,deleteBtn;
 
-    android.support.v7.app.ActionBar mActionBar;
+    Toolbar mActionBar;
 
 
     @Override
@@ -56,9 +56,20 @@ public class AssignmentActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_assignment);
 
-        //뒤로 가기 버튼 추가
-//        mActionBar = getSupportActionBar();
-//        mActionBar.setDisplayHomeAsUpEnabled(true);
+        //toolbar 생성
+        mActionBar = (Toolbar) findViewById(R.id.toolbar2);
+        setSupportActionBar(mActionBar);
+//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+//        getSupportActionBar().setDisplayShowHomeEnabled(true);
+//
+//
+//        mActionBar.setNavigationOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                startActivity(new Intent(getApplicationContext(),CourseDetailActivity.class));
+//            }
+//        });
+
 
         Intent intent = getIntent();
         hw_no = intent.getStringExtra("hw_no");
@@ -75,6 +86,7 @@ public class AssignmentActivity extends AppCompatActivity {
                 startActivity(moveToFileUpload);
             }
         });
+
 
         editBtn = (Button) findViewById(R.id.btn_delete);
         deleteBtn = (Button) findViewById(R.id.btn_edit);
@@ -106,8 +118,6 @@ public class AssignmentActivity extends AppCompatActivity {
 
                 }
             });
-
-
         }else{  //만약 학생인 경우
             editBtn.setVisibility(View.INVISIBLE);
             deleteBtn.setVisibility(View.INVISIBLE);
@@ -116,7 +126,7 @@ public class AssignmentActivity extends AppCompatActivity {
 
     }
     private void getAssignmentInfo() {
-        // Gson object를 만들어서 Json을 읽어와서 Gson으로 해석할 수 있도록 함
+        // Gson object
         Gson gson = new GsonBuilder()
                 .setLenient()
                 .create();
@@ -130,24 +140,25 @@ public class AssignmentActivity extends AppCompatActivity {
         Call<List<AssignmentList>> call = api.getAssignmentInfo(Integer.parseInt(hw_no));
 
         call.enqueue(new Callback<List<AssignmentList>>() {
-
             @Override
             public void onResponse(Call<List<AssignmentList>> call, Response<List<AssignmentList>> response) {
                 List<AssignmentList> asList = response.body();
+                String name,content,due;
 
-//                String[] as = new String[asList.size()];
-                String content,due;
-
+                name =  asList.get(0).getHw_name();
                 content = asList.get(0).getHw_content();
                 due = asList.get(0).getHw_due();
 
+//                texts.setText(name);
                 texts.setText(content);
-                asListView.setFilterText(due);
-//                asListView.setAdapter(new ArrayAdapter<String>(AssignmentActivity.this,
-//                        android.R.layout.simple_list_item_1, Integer.parseInt(due)));
+                setSupportActionBar(mActionBar);
+                getSupportActionBar().setTitle(name);
 
-
-//                asListView.setAdapter(new ArrayAdapter<String>(AssignmentActivity.this, android.R.layout.simple_list_item_1, as));
+                AssignmentListViewAdapter adapter = new AssignmentListViewAdapter();
+                asListView.setAdapter(adapter);
+                adapter.addAsList("채점상태: ","없음");
+                adapter.addAsList("마감일시: ",due);
+                adapter.addAsList("제출파일: ","없음");
             }
 
             @Override

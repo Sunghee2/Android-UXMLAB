@@ -210,22 +210,17 @@ public class AddAssignmentActivity extends AppCompatActivity {
 
             @Override
             public void onResponse(Call<List<Result>> call, Response<List<Result>> response) {
-                // 강의 추가하는 결과가 어떻게 되었는지. result를 받아옴.
+                // 결과가 어떻게 되었는지. result를 받아옴.
                 int result = response.body().get(0).getResult();
 
-                if (result == 0) { // 강의 추가가 안된 경우
-                    Toast.makeText(getApplicationContext(), "실패", Toast.LENGTH_SHORT).show();
-                } else if (result == 1) { // 강의 추가 성공
+                if (result == 0) { //추가 실패
+                    Toast.makeText(getApplicationContext(), "실패했습니다.", Toast.LENGTH_SHORT).show();
+                } else if (result == 1) { // 추가 성공
                     Toast.makeText(getApplicationContext(), "성공적으로 강의를 추가했습니다.", Toast.LENGTH_SHORT).show();
-
-                    // 강의가 추가된 리스트를 새로 업데이트하기 위해서.
-                    Intent intent = new Intent(AddAssignmentActivity.this, AssignmentListActivity.class);
-                    startActivity(intent);
-                    finish();
                 }
             }
 
-            // 실패시 처리하는 방법을 정하는 메서드
+            // 실패
             @Override
             public void onFailure(Call<List<Result>> call, Throwable t) {
                 Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_SHORT).show();

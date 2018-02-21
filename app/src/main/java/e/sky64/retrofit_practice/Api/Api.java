@@ -21,11 +21,12 @@ import retrofit2.http.POST;
 // Api 정의
 public interface Api {
     // 접속 ip 및 URL 지정
-
+    //이성희
     //String BASE_URL = "http://10.0.2.2:8080/";
-//    String BASE_URL = "http://192.168.123.108/";
 
-    //이승연IP
+    //문현주
+//    String BASE_URL = "http://192.168.123.108/";
+    //이승연
     String BASE_URL = "http://10.0.2.2/~seungyeonlee/";
 
     //과제
@@ -41,32 +42,21 @@ public interface Api {
 
     //-----관리자--------
     //1. 과제등록
-//    @FormUrlEncoded
-//    @POST("add_assignment.php")
-//    Call <List<Result>> addAssignment(
-//            @Field("hw_name") String hw_name, @Field("hw_content") String hw_content, @Field("hw_due") String hw_due
-//    );
     @FormUrlEncoded
-    @POST("uxmlab_course_add.php")
+    @POST("add_assignment.php")
     Call<List<Result>> addAssignment(@Field("course_no") int course_no,
             @Field("hw_name") String hw_name,
                                      @Field("hw_content") String hw_content,
                                      @Field("hw_due") String hw_due);
-
-
     //2. 과제 수정시 과제 데이터 가져오기
     @FormUrlEncoded
-    @GET("get_assignment.php")
+    @POST("edit_read_assignment.php")
     Call<List<Assignment>> readAssignment(@Field("hw_no") int hw_no);
 
     //3. 관리자 과제 수정
     @FormUrlEncoded
-    @POST("edit_assignment.php")
-    Call<List<Result>> editAssignment(
-                                          @Field("hw_name") String hw_name,
-                                          @Field("hw_content") String hw_content,
-                                          @Field("hw_due") String hw_due);
-
+    @POST("edit_assignment_info.php")
+    Call<List<Result>> editAssignment(@Field("hw_name") String hw_name, @Field("hw_content") String hw_content, @Field("hw_due") String hw_due);
 
 
     // 강의 리스트

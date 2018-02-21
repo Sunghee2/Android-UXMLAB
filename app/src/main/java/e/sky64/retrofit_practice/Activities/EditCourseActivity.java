@@ -99,8 +99,6 @@ public class EditCourseActivity extends AppCompatActivity {
         Api api = retrofit.create(Api.class);
 
         Call<List<Course>> call = api.readCourse(origin_course_no);
-
-
         call.enqueue(new Callback<List<Course>>() {
             @Override
             public void onResponse(Call<List<Course>> call, Response<List<Course>> response) {

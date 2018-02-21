@@ -52,6 +52,7 @@ public class AssignmentListActivity extends AppCompatActivity {
 
 
     private void getAssignments() {
+
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(Api.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
@@ -76,7 +77,6 @@ public class AssignmentListActivity extends AppCompatActivity {
                     as[i] = name +
                             "\n\n기한 :" + due + "\n";
                 }
-
                 asListView.setAdapter(new ArrayAdapter<String>(AssignmentListActivity.this, android.R.layout.simple_list_item_1, as));
             }
 
