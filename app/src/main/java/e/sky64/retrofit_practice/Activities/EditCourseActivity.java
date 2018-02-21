@@ -99,6 +99,8 @@ public class EditCourseActivity extends AppCompatActivity {
         Api api = retrofit.create(Api.class);
 
         Call<List<Course>> call = api.readCourse(origin_course_no);
+
+
         call.enqueue(new Callback<List<Course>>() {
             @Override
             public void onResponse(Call<List<Course>> call, Response<List<Course>> response) {
@@ -180,6 +182,7 @@ public class EditCourseActivity extends AppCompatActivity {
 
                     // 강의가 수정된 리스트를 새로 업데이트하기 위해서.
                     Intent intent = new Intent(EditCourseActivity.this, CourseListActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(intent);
                     overridePendingTransition(0,0);
                     finish();

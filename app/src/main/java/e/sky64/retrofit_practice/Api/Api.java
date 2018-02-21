@@ -53,10 +53,15 @@ public interface Api {
     @POST("edit_read_assignment.php")
     Call<List<Assignment>> readAssignment(@Field("hw_no") int hw_no);
 
-    //3. 관리자 과제 수정
+    //3. 관리자 과제 수정 업데이트
     @FormUrlEncoded
-    @POST("edit_assignment_info.php")
-    Call<List<Result>> editAssignment(@Field("hw_name") String hw_name, @Field("hw_content") String hw_content, @Field("hw_due") String hw_due);
+    @POST("edit_assignment.php")
+    Call<List<Assignment>> editAssignment(
+            @Field("hw_no") String hw_no,
+            @Field("hw_name") String hw_name,
+            @Field("hw_content") String hw_content,
+            @Field("hw_due") String hw_due
+    );
 
 
     // 강의 리스트

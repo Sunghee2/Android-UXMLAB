@@ -34,6 +34,7 @@ public class AssignmentListActivity extends AppCompatActivity {
         //course_number를 intent로 받아온다.
         Intent intent = getIntent();
         course_no = intent.getStringExtra("course_number");
+
 //        Toast.makeText(AssignmentListActivity.this,course_no, Toast.LENGTH_SHORT).show();
 
         asListView = (ListView) findViewById(R.id.asListView);
@@ -75,11 +76,10 @@ public class AssignmentListActivity extends AppCompatActivity {
                     name = asList.get(i).getHw_name();
                     due = asList.get(i).getHw_due();
                     as[i] = name +
-                            "\n\n기한 :" + due + "\n";
+                            "\n\n기한: " + due + "\n";
                 }
                 asListView.setAdapter(new ArrayAdapter<String>(AssignmentListActivity.this, android.R.layout.simple_list_item_1, as));
             }
-
             @Override
             public void onFailure(Call<List<AssignmentList>> call, Throwable t) { //만약 db에서 데이터 갖고오는 것을 실패하였을 경우
                 Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_SHORT).show();

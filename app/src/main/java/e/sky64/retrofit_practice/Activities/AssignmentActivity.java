@@ -45,8 +45,8 @@ public class AssignmentActivity extends AppCompatActivity {
     private static final String TAG_CONTENT ="hw_content";
     private static final String TAG_DUE ="hw_due";
 
-    //FileUploadActivity로 넘어가는 버튼, 관리자 과제 수정, 관리자 과제 삭제
-    private Button uploadButton,editBtn,deleteBtn;
+    //FileUploadActivity로 넘어가는 버튼, 관리자 과제 수정
+    private Button uploadButton,editBtn;
 
     Toolbar mActionBar;
 
@@ -59,16 +59,6 @@ public class AssignmentActivity extends AppCompatActivity {
         //toolbar 생성
         mActionBar = (Toolbar) findViewById(R.id.toolbar2);
         setSupportActionBar(mActionBar);
-//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-//        getSupportActionBar().setDisplayShowHomeEnabled(true);
-//
-//
-//        mActionBar.setNavigationOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                startActivity(new Intent(getApplicationContext(),CourseDetailActivity.class));
-//            }
-//        });
 
 
         Intent intent = getIntent();
@@ -89,7 +79,6 @@ public class AssignmentActivity extends AppCompatActivity {
 
 
         editBtn = (Button) findViewById(R.id.btn_delete);
-        deleteBtn = (Button) findViewById(R.id.btn_edit);
 
         getAssignmentInfo();
 
@@ -99,7 +88,7 @@ public class AssignmentActivity extends AppCompatActivity {
         //관리자인 경우
         if(is_student==0){
             editBtn.setVisibility(View.VISIBLE);
-            deleteBtn.setVisibility(View.VISIBLE);
+
 
             editBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -108,19 +97,11 @@ public class AssignmentActivity extends AppCompatActivity {
                     Intent intent = new Intent(AssignmentActivity.this,EditAssignmentActivity.class);
                     intent.putExtra("hw_no",hw_no);
                     startActivity(intent);
-
                 }
             });
 
-            deleteBtn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-
-                }
-            });
         }else{  //만약 학생인 경우
             editBtn.setVisibility(View.INVISIBLE);
-            deleteBtn.setVisibility(View.INVISIBLE);
 
         }
 

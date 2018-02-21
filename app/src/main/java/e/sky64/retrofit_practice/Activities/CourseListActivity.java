@@ -251,6 +251,7 @@ public class CourseListActivity extends AppCompatActivity {
 
                         // 강의가 등록된 리스트를 새로 업데이트하기 위해서.
                         Intent intent = new Intent(CourseListActivity.this, CourseListActivity.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(intent);
                         overridePendingTransition(0,0);
                     finish();
@@ -272,7 +273,6 @@ public class CourseListActivity extends AppCompatActivity {
         menuInflater.inflate(R.menu.menu, menu);
         return true;
     }
-
     // 옵션 메뉴 중 무언가 선택했을 때 실행하는 것
     @Override
     public boolean onOptionsItemSelected(MenuItem item){

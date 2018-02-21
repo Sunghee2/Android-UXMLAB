@@ -31,6 +31,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 /**
  * Created by 630su on 2018-02-19.
  */
+
 public class CourseListAdapter extends BaseAdapter {
     private Context context;
     private List<Course> courseList;

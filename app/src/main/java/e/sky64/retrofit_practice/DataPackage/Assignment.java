@@ -8,31 +8,13 @@ import com.google.gson.annotations.SerializedName;
  */
 
 public class Assignment {
-    public int getCourse_no() {
-        return course_no;
-    }
-
-    public void setCourse_no(int course_no) {
-        this.course_no = course_no;
-    }
-
     @SerializedName("course_no")
     @Expose
     private int course_no;
 
-    public String getHw_no() {
-        return hw_no;
-    }
-
-    public void setHw_no(String hw_no) {
-        this.hw_no = hw_no;
-    }
-
     @SerializedName("hw_no")
     @Expose
-
     private String hw_no;
-
 
     @SerializedName("hw_name")
     @Expose
@@ -50,6 +32,14 @@ public class Assignment {
     @Expose
     private int result;
 
+    public int getCourse_no() {
+        return course_no;
+    }
+
+    public void setCourse_no(int course_no) {
+        this.course_no = course_no;
+    }
+
     public int getResult() {
         return result;
     }
@@ -58,7 +48,13 @@ public class Assignment {
         this.result = result;
     }
 
+    public String getHw_no() {
+        return hw_no;
+    }
 
+    public void setHw_no(String hw_no) {
+        this.hw_no = hw_no;
+    }
 
     public String getHw_name() {
         return hw_name;

@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.format.DateFormat;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -43,9 +44,9 @@ public class EditAssignmentActivity extends AppCompatActivity {
 
     //마감 날짜, 시간, 과제 등록
     private Button btnDatePicker, btnTimePicker, btnAddAssignment;
-    Assignment assignment;
-//    List<Assignment> asList;
-//    Assignment assList;
+    List<Assignment> assignment;
+
+    private String course_no;
 
 
     @Override
@@ -93,16 +94,17 @@ public class EditAssignmentActivity extends AppCompatActivity {
                 formChecker(v);
             }
         });
-
-
-
     }
 
     // 과제 번호로 과제의 다른 데이터를 가져옴
     private void readAssignment(int hw_no) {
+        // Gson object를 만들어서 Json을 읽어와서 Gson으로 해석할 수 있도록 함
+        Gson gson = new GsonBuilder()
+                .setLenient()
+                .create();
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(Api.BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create(gson))
                 .build();
 
         Api api = retrofit.create(Api.class);
@@ -112,28 +114,22 @@ public class EditAssignmentActivity extends AppCompatActivity {
         call.enqueue(new Callback<List<Assignment>>() {
             @Override
             public void onResponse(Call<List<Assignment>> call, Response<List<Assignment>> response) {
-                assignment = response.body().get(0);
-//                assList = response.body().get(0);
+
+                assignment = response.body();
                 //기한을 날짜와 시간으로 자름
-
                 String[] as;
-                String due,time;
-
-                String dueAndTime = String.valueOf(assignment.getHw_due());
+                String date,time;
+                String dueAndTime = assignment.get(0).getHw_due();
                 as = dueAndTime.split(" ");
-                due = as[0];
+                date = as[0];
                 time = as[1];
 
-
-
-                Toast.makeText(EditAssignmentActivity.this,due,Toast.LENGTH_LONG).show();
-
                 //과제 정보 값을 가져와서 edittext에 넣음
-                asName.setText(assignment.getHw_name());
-                asContent.setText(assignment.getHw_name());
-                inDate.setText(due);
+                asName.setText(assignment.get(0).getHw_name());
+                asContent.setText(assignment.get(0).getHw_content());
+                inDate.setText(date);
                 inTime.setText(time);
-
+                course_no = Integer.toString(assignment.get(0).getCourse_no());
             }
 
             // 실패시 처리하는 방법을 정하는 메서드
@@ -170,6 +166,7 @@ public class EditAssignmentActivity extends AppCompatActivity {
         Gson gson = new GsonBuilder()
                 .setLenient()
                 .create();
+
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(Api.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create(gson))
@@ -177,70 +174,30 @@ public class EditAssignmentActivity extends AppCompatActivity {
 
         Api api = retrofit.create(Api.class);
 
-        Call<List<Result>> call = api.editAssignment(hw_name,hw_content,hw_due);
-        call.enqueue(new Callback<List<Result>>() {
+        Log.e("dsafasdf", hw_name);
+        Log.e("dsafasdf", hw_content);
+        Log.e("dsafasdf", hw_due);
+
+        Call<List<Assignment>> call = api.editAssignment(hw_no,hw_name,hw_content,hw_due);
+        call.enqueue(new Callback<List<Assignment>>() {
             @Override
-            public void onResponse(Call<List<Result>> call, Response<List<Result>> response) {
+            public void onResponse(Call<List<Assignment>> call, Response<List<Assignment>> response) {
                 //수정의 결과 받아오기
                 int result = response.body().get(0).getResult();
                 if(result==0) { // 수정 실패
-                    Toast.makeText(getApplicationContext(), "실패", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Error! 수정 실패", Toast.LENGTH_SHORT).show();
                 } else if (result==1) { // 강의 수정 성공
-                    Toast.makeText(getApplicationContext(), "성공적으로 강의를 수정했습니다.", Toast.LENGTH_SHORT).show();
-                }
+                    Toast.makeText(getApplicationContext(), "Success! 수정 성공", Toast.LENGTH_SHORT).show();
 
+                }
             }
 
             // 실패시 처리하는 방법을 정하는 메서드
             @Override
-            public void onFailure(Call<List<Result>> call, Throwable t) {
+            public void onFailure(Call<List<Assignment>> call, Throwable t) {
                 Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_LONG).show();
+
             }
         });
-    }
-
-    //날짜 선택 정보 받아오기
-    public static class DatePickerDialogTheme extends DialogFragment implements DatePickerDialog.OnDateSetListener{
-        private TextView txtDate;
-
-        @Override
-        public Dialog onCreateDialog(Bundle savedInstanceState){
-            final Calendar calendar = Calendar.getInstance();
-            int year = calendar.get(Calendar.YEAR);
-            int month = calendar.get(Calendar.MONTH);
-            int day = calendar.get(Calendar.DAY_OF_MONTH);
-
-            DatePickerDialog datepickerdialog = new DatePickerDialog(getActivity(),
-                    AlertDialog.THEME_DEVICE_DEFAULT_DARK,this,year,month,day);
-
-            return datepickerdialog;
-        }
-
-        @Override
-        public void onDateSet(DatePicker view, int year, int month, int day){
-
-            txtDate = (TextView) getActivity().findViewById(R.id.in_date);
-            txtDate.setText(year+"/"+(month+1)+"/"+day);
-        }
-    }
-
-    //시간 선택 정보 받아오기
-    public static class TimePickerDialogTheme extends DialogFragment implements TimePickerDialog.OnTimeSetListener{
-        @Override
-        public Dialog onCreateDialog(Bundle savedInstanceState) {
-            final Calendar c = Calendar.getInstance();
-            int hour = c.get(Calendar.HOUR_OF_DAY);
-            int minute = c.get(Calendar.MINUTE);
-            TimePickerDialog timePickerDialog = new TimePickerDialog(getActivity(),R.style.Theme_AppCompat_Dialog_Alert,this,hour, minute,
-                    DateFormat.is24HourFormat(getActivity()));
-
-            return timePickerDialog;
-        }
-
-        @Override
-        public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-            TextView txtTime = (TextView) getActivity().findViewById(R.id.in_time);
-            txtTime.setText(hourOfDay+":"+minute+":00");
-        }
     }
 }

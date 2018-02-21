@@ -33,7 +33,6 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
-//import retrofit2.converter.scalars.ScalarsConverterFactory;
 
 public class AddAssignmentActivity extends AppCompatActivity {
 
@@ -42,9 +41,6 @@ public class AddAssignmentActivity extends AppCompatActivity {
 
     //마감 날짜, 시간, 과제 등록
     private Button btnDatePicker, btnTimePicker, btnAddAssignment;
-
-    //액션바
-    android.support.v7.app.ActionBar mActionBar2;
 
     //강좌번호 받아오기
     private String course_no;
@@ -60,15 +56,10 @@ public class AddAssignmentActivity extends AppCompatActivity {
         inDate = (EditText) findViewById(R.id.in_date);
         inTime = (EditText) findViewById(R.id.in_time);
 
-//        //액션바에 뒤로가기 버튼 추가
-//        mActionBar2 = getSupportActionBar();
-//        mActionBar2.setDisplayHomeAsUpEnabled(true);
-
 
         //CourseDetailActivity에서 course_number를 받아옴
         Intent intent = getIntent();
         course_no = intent.getStringExtra("course_number");
-//        Toast.makeText(AddAssignmentActivity.this,course_no, Toast.LENGTH_SHORT).show();
 
 
 
@@ -97,31 +88,12 @@ public class AddAssignmentActivity extends AppCompatActivity {
         //과제 등록 버튼
         btnAddAssignment = (Button)findViewById(R.id.addAssignment);
         btnAddAssignment.setOnClickListener(new View.OnClickListener() {
-
-
             @Override
             public void onClick(View v) {
                 formChecker(v);
             }
         });
     }
-
-    //액션바 뒤로가기 클릭 시 뒤로 가게 함.
-    public boolean onOptionsItemSelected(android.view.MenuItem item) {
-        switch (item.getItemId()) {
-
-            case android.R.id.home:
-
-                // NavUtils.navigateUpFromSameTask(this);
-                finish();
-
-                return true;
-
-        }
-
-        return super.onOptionsItemSelected(item);
-    };
-
 
     //모든 폼을 작성했는지 확인
     public void formChecker(View view){
@@ -198,7 +170,6 @@ public class AddAssignmentActivity extends AppCompatActivity {
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(Api.BASE_URL)
-//                .addConverterFactory(ScalarsConverterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .build();
 

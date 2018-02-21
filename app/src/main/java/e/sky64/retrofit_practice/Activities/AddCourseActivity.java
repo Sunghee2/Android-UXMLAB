@@ -134,6 +134,7 @@ public class AddCourseActivity extends AppCompatActivity {
 
                     // 강의가 추가된 리스트를 새로 업데이트하기 위해서.
                     Intent intent = new Intent(AddCourseActivity.this, CourseListActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(intent);
                     overridePendingTransition(0,0);
                     finish();
