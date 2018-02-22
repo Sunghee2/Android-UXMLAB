@@ -16,6 +16,8 @@ import android.widget.Toast;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import java.sql.Timestamp;
+import java.util.Date;
 import java.util.List;
 
 import e.sky64.retrofit_practice.Adapters.AssignmentListViewAdapter;
@@ -47,7 +49,6 @@ public class AssignmentActivity extends AppCompatActivity {
 
     Toolbar mActionBar;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,6 +70,7 @@ public class AssignmentActivity extends AppCompatActivity {
         uploadButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
+
                 Intent moveToFileUpload =  new Intent(AssignmentActivity.this, FileUploadActivity.class);
                 startActivity(moveToFileUpload);
             }
@@ -102,15 +104,16 @@ public class AssignmentActivity extends AppCompatActivity {
         is_student=userApplication.getIsStudent();
 
         //관리자인 경우 과제 수정, 과제 삭제 버튼만 보이게 하고 과제 제출 버튼은 보이지 않도록 함.
+        //하지만 테스트용이므로 과제제출 버튼 보이게 하였음.
         if(is_student==0){
             editBtn.setVisibility(View.VISIBLE);
             deleteBtn.setVisibility(View.VISIBLE);
-            uploadButton.setVisibility(View.INVISIBLE);
+//            uploadButton.setVisibility(View.VISIBLE);
 
         }else{  //학생인 경우 관리자가 사용하는 버튼 2개는 invisible하게 하고 과제 제출버튼만 보이도록 함.
             editBtn.setVisibility(View.INVISIBLE);
             deleteBtn.setVisibility(View.INVISIBLE);
-            uploadButton.setVisibility(View.VISIBLE);
+//            uploadButton.setVisibility(View.VISIBLE);
         }
     }
 
@@ -157,6 +160,8 @@ public class AssignmentActivity extends AppCompatActivity {
         });
 
     }
+
+    //과제 삭제 버튼 클릭시 호출되는 팝업창
     public void alertDeleteAssignment() {
         new AlertDialog.Builder(AssignmentActivity.this)
                 .setTitle("과제 삭제")
@@ -218,7 +223,6 @@ public class AssignmentActivity extends AppCompatActivity {
             }
         });
     }
-
     @Override
     protected void onPause() {
         super.onPause();

@@ -194,7 +194,6 @@ public class AddAssignmentActivity extends AppCompatActivity {
                     startActivity(intent);
                 }
             }
-
             // 실패
             @Override
             public void onFailure(Call<List<AssignmentList>> call, Throwable t) {
