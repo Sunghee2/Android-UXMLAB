@@ -27,7 +27,6 @@ public class AssignmentListActivity extends AppCompatActivity {
     String course_no;
     List<AssignmentList> asList;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -89,5 +88,10 @@ public class AssignmentListActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
     }
 }

@@ -79,7 +79,6 @@ public class AssignmentActivity extends AppCompatActivity {
         editBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 Intent intent = new Intent(AssignmentActivity.this,EditAssignmentActivity.class);
                 intent.putExtra("hw_no",hw_no);
                 startActivity(intent);
@@ -121,26 +120,38 @@ public class AssignmentActivity extends AppCompatActivity {
                 .baseUrl(Api.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
+
         Api api  = retrofit.create(Api.class);
-        Call<List<Result>> call = api.deleteAssignment(hw_no);
-        call.enqueue(new Callback<List<Result>>() {
+        Call<List<AssignmentList>> call = api.deleteAssignment(hw_no);
+
+        call.enqueue(new Callback<List<AssignmentList>>() {
 
             @Override
-            public void onResponse(Call<List<Result>> call, Response<List<Result>> response) {
+            public void onResponse(Call<List<AssignmentList>> call, Response<List<AssignmentList>> response) {
+                //성공인지 실패인지 결과값 받아오기
                 int result = response.body().get(0).getResult();
+
+                //강의 번호 받아오기.
+                String course_no = response.body().get(0).getCourse_no();
 
                 if (result==1){ //삭제 성공
                     Toast.makeText(getApplicationContext(), "과제를 삭제 했습니다.", Toast.LENGTH_SHORT).show();
+                    //삭제 성공 후 과제 리스트로 이동.
+                    Intent intent = new Intent(AssignmentActivity.this,AssignmentListActivity.class);
+                    intent.putExtra("course_number",course_no);
+
+                    //위의 모든 액티비티 종료 후
+                    //AssignmentListActivity를 새로 호출된 AssignmentListActivity로 변경하는 플래그
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(intent);
 
                 }else{ //삭제 실패
                     Toast.makeText(getApplicationContext(), "Error! 수정 실패", Toast.LENGTH_SHORT).show();
                 }
-
-
             }
 
             @Override
-            public void onFailure(Call<List<Result>> call, Throwable t) {
+            public void onFailure(Call<List<AssignmentList>> call, Throwable t) {
 
             }
         });
@@ -150,20 +161,17 @@ public class AssignmentActivity extends AppCompatActivity {
         new AlertDialog.Builder(AssignmentActivity.this)
                 .setTitle("과제 삭제")
                 .setMessage("과제를 삭제하시겠습니까?")
-//                .setIcon(R.drawable.ninja)
                 .setPositiveButton("OK",
                         new DialogInterface.OnClickListener() {
                             @TargetApi(11)
                             public void onClick(DialogInterface dialog, int id) {
                                 deleteAssignment();
-//                                showToast("Thank you! You're awesome too!");
                                 dialog.cancel();
                             }
                         })
                 .setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
                     @TargetApi(11)
                     public void onClick(DialogInterface dialog, int id) {
-//                        showToast("Mike is not awesome for you. :(");
                         dialog.cancel();
                     }
                 }).show();
@@ -211,5 +219,9 @@ public class AssignmentActivity extends AppCompatActivity {
         });
     }
 
-
+    @Override
+    protected void onPause() {
+        super.onPause();
+        finish();
+    }
 }

@@ -177,17 +177,26 @@ public class EditAssignmentActivity extends AppCompatActivity {
                     //과제 수정 성공시 AssignmentList로 다시 넘어간다.
                     Intent intent = new Intent(EditAssignmentActivity.this,AssignmentListActivity.class);
                     intent.putExtra("course_number",course_no);
-                    startActivity(intent);
 
+                    //AssignmentListActivity위의 모든 액티비티 종료 후
+                    //새로 호출된 AssignmentActivity를 기존 액티비티로 변경하는 플래그
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+
+                    startActivity(intent);
                 }
             }
-
             // 실패시 처리하는 방법을 정하는 메서드
             @Override
             public void onFailure(Call<List<AssignmentList>> call, Throwable t) {
                 Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_LONG).show();
-
             }
         });
     }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        finish();
+    }
+
 }
