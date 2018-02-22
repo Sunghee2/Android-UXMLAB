@@ -1,5 +1,8 @@
 package e.sky64.retrofit_practice.Activities;
 
+import android.annotation.TargetApi;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -18,6 +21,7 @@ import java.util.List;
 import e.sky64.retrofit_practice.Adapters.AssignmentListViewAdapter;
 import e.sky64.retrofit_practice.Api.Api;
 import e.sky64.retrofit_practice.DataPackage.AssignmentList;
+import e.sky64.retrofit_practice.DataPackage.Result;
 import e.sky64.retrofit_practice.GlobalUserApplication;
 import e.sky64.retrofit_practice.R;
 import retrofit2.Call;
@@ -38,8 +42,8 @@ public class AssignmentActivity extends AppCompatActivity {
     private String hw_no;
     int is_student;
 
-    //FileUploadActivity로 넘어가는 버튼, 관리자 과제 수정
-    private Button uploadButton,editBtn;
+    //과제 제출버튼, 관리자 과제 수정,관리자 과제 삭제
+    private Button uploadButton,editBtn,deleteBtn;
 
     Toolbar mActionBar;
 
@@ -70,37 +74,101 @@ public class AssignmentActivity extends AppCompatActivity {
             }
         });
 
+        //관리자 과제 수정버튼
+        editBtn = (Button) findViewById(R.id.btn_edit);
+        editBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
-        editBtn = (Button) findViewById(R.id.btn_delete);
+                Intent intent = new Intent(AssignmentActivity.this,EditAssignmentActivity.class);
+                intent.putExtra("hw_no",hw_no);
+                startActivity(intent);
+            }
+        });
+
+        //관리자 과제 삭제버튼
+        deleteBtn = (Button) findViewById(R.id.btn_delete);
+        deleteBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                alertDeleteAssignment();
+            }
+        });
 
         //과제정보 받아옴
         getAssignmentInfo();
 
-        //글로벌...
+        //글로벌
         GlobalUserApplication userApplication = (GlobalUserApplication) getApplication();
         is_student=userApplication.getIsStudent();
 
-        //관리자인 경우
+        //관리자인 경우 과제 수정, 과제 삭제 버튼만 보이게 하고 과제 제출 버튼은 보이지 않도록 함.
         if(is_student==0){
             editBtn.setVisibility(View.VISIBLE);
+            deleteBtn.setVisibility(View.VISIBLE);
+            uploadButton.setVisibility(View.INVISIBLE);
 
-
-            editBtn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-
-                    Intent intent = new Intent(AssignmentActivity.this,EditAssignmentActivity.class);
-                    intent.putExtra("hw_no",hw_no);
-                    startActivity(intent);
-                }
-            });
-
-        }else{  //만약 학생인 경우
+        }else{  //학생인 경우 관리자가 사용하는 버튼 2개는 invisible하게 하고 과제 제출버튼만 보이도록 함.
             editBtn.setVisibility(View.INVISIBLE);
-
+            deleteBtn.setVisibility(View.INVISIBLE);
+            uploadButton.setVisibility(View.VISIBLE);
         }
+    }
+
+    //과제 삭제하는 함수
+    private void deleteAssignment(){
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(Api.BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        Api api  = retrofit.create(Api.class);
+        Call<List<Result>> call = api.deleteAssignment(hw_no);
+        call.enqueue(new Callback<List<Result>>() {
+
+            @Override
+            public void onResponse(Call<List<Result>> call, Response<List<Result>> response) {
+                int result = response.body().get(0).getResult();
+
+                if (result==1){ //삭제 성공
+                    Toast.makeText(getApplicationContext(), "과제를 삭제 했습니다.", Toast.LENGTH_SHORT).show();
+
+                }else{ //삭제 실패
+                    Toast.makeText(getApplicationContext(), "Error! 수정 실패", Toast.LENGTH_SHORT).show();
+                }
+
+
+            }
+
+            @Override
+            public void onFailure(Call<List<Result>> call, Throwable t) {
+
+            }
+        });
 
     }
+    public void alertDeleteAssignment() {
+        new AlertDialog.Builder(AssignmentActivity.this)
+                .setTitle("과제 삭제")
+                .setMessage("과제를 삭제하시겠습니까?")
+//                .setIcon(R.drawable.ninja)
+                .setPositiveButton("OK",
+                        new DialogInterface.OnClickListener() {
+                            @TargetApi(11)
+                            public void onClick(DialogInterface dialog, int id) {
+                                deleteAssignment();
+//                                showToast("Thank you! You're awesome too!");
+                                dialog.cancel();
+                            }
+                        })
+                .setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
+                    @TargetApi(11)
+                    public void onClick(DialogInterface dialog, int id) {
+//                        showToast("Mike is not awesome for you. :(");
+                        dialog.cancel();
+                    }
+                }).show();
+    }
+
     //과제 정보 받아오는 함수.
     private void getAssignmentInfo() {
         // Gson object
@@ -113,9 +181,7 @@ public class AssignmentActivity extends AppCompatActivity {
                 .build();
 
         Api api = retrofit.create(Api.class);
-
         Call<List<AssignmentList>> call = api.getAssignmentInfo(Integer.parseInt(hw_no));
-
         call.enqueue(new Callback<List<AssignmentList>>() {
             @Override
             public void onResponse(Call<List<AssignmentList>> call, Response<List<AssignmentList>> response) {

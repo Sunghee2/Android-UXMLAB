@@ -65,11 +65,28 @@
         app:layout_constraintTop_toBottomOf="@+id/ListView" />
 
     <Button
+        android:id="@+id/btn_edit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="41dp"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="22dp"
+        android:text="[관리자]과제 수정"
+        app:layout_constraintEnd_toStartOf="@+id/btn_delete"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button3" />
+
+    <Button
         android:id="@+id/btn_delete"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="52dp"
-        android:text="[관리자]과제 수정"
+        android:layout_marginEnd="39dp"
+        android:layout_marginStart="41dp"
+        android:layout_marginTop="22dp"
+        android:text="[관리자]과제 삭제"
+        app:layout_constraintBottom_toBottomOf="@+id/btn_edit"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/btn_edit"
         app:layout_constraintTop_toBottomOf="@+id/button3" />
 
 

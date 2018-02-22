@@ -145,6 +145,7 @@ public class EditAssignmentActivity extends AppCompatActivity {
         }
     }
 
+    //과제 수정된 항목 업데이트하기
     private void editAssignment(String hw_name, String hw_content, String hw_due) {
         // Gson object를 만들어서 Json을 읽어와서 Gson으로 해석할 수 있도록 함
         Gson gson = new GsonBuilder()
@@ -158,17 +159,25 @@ public class EditAssignmentActivity extends AppCompatActivity {
 
         Api api = retrofit.create(Api.class);
 
-
         Call<List<AssignmentList>> call = api.editAssignment(hw_no,hw_name,hw_content,hw_due);
         call.enqueue(new Callback<List<AssignmentList>>() {
             @Override
             public void onResponse(Call<List<AssignmentList>> call, Response<List<AssignmentList>> response) {
                 //수정의 결과 받아오기
                 int result = response.body().get(0).getResult();
+
+                //강의번호 받아오기
+                String course_no =  response.body().get(0).getCourse_no();
+
                 if(result==0) { // 수정 실패
                     Toast.makeText(getApplicationContext(), "Error! 수정 실패", Toast.LENGTH_SHORT).show();
-                } else if (result==1) { // 강의 수정 성공
+                } else if (result==1) { // 과제 수정 성공
                     Toast.makeText(getApplicationContext(), "Success! 수정 성공", Toast.LENGTH_SHORT).show();
+
+                    //과제 수정 성공시 AssignmentList로 다시 넘어간다.
+                    Intent intent = new Intent(EditAssignmentActivity.this,AssignmentListActivity.class);
+                    intent.putExtra("course_number",course_no);
+                    startActivity(intent);
 
                 }
             }

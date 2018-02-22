@@ -43,7 +43,7 @@ public interface Api {
     @FormUrlEncoded
     @POST("add_assignment.php")
     Call<List<Result>> addAssignment(@Field("course_no") int course_no,
-            @Field("hw_name") String hw_name,
+                                     @Field("hw_name") String hw_name,
                                      @Field("hw_content") String hw_content,
                                      @Field("hw_due") String hw_due);
     //2. 과제 수정시 과제 데이터 가져오기
@@ -61,6 +61,12 @@ public interface Api {
             @Field("hw_due") String hw_due
     );
 
+    //4. 관리자 과제 삭제
+    @FormUrlEncoded
+    @POST("delete_assignment.php")
+    Call<List<Result>> deleteAssignment(
+            @Field("hw_no") String hw_no
+    );
 
     // 강의 리스트
     @FormUrlEncoded

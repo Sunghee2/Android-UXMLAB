@@ -182,9 +182,9 @@ public class AddAssignmentActivity extends AppCompatActivity {
                 int result = response.body().get(0).getResult();
 
                 if (result == 0) { //추가 실패
-                    Toast.makeText(getApplicationContext(), "실패했습니다.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Fail! 과제 생성 실패", Toast.LENGTH_SHORT).show();
                 } else if (result == 1) { // 추가 성공
-                    Toast.makeText(getApplicationContext(), "성공적으로 강의를 추가했습니다.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Success! 과제 생성 성공", Toast.LENGTH_SHORT).show();
                 }
             }
 
