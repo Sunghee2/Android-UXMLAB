@@ -23,9 +23,9 @@ public interface Api {
     //String BASE_URL = "http://10.0.2.2:8080/";
 
     //문현주
-//    String BASE_URL = "http://192.168.123.108/";
+    String BASE_URL = "http://192.168.0.51/";
     //이승연
-    String BASE_URL = "http://10.0.2.2/~seungyeonlee/";
+    //String BASE_URL = "http://10.0.2.2/~seungyeonlee/";
 
     //과제
     //과제 리스트 읽어오기
@@ -111,10 +111,28 @@ public interface Api {
                                      @Field("course_no") String course_no
     );
 
-    //공지사항 읽기
+    //공지사항 리스트
     @FormUrlEncoded
     @POST("uxmlab_read_board.php")
     Call<List<Board>> getBoard(@Field("course_no") int course_no);
 
+    //공지사항 상세정보
+    @FormUrlEncoded
+    @POST("uxmlab_read_board_detail.php")
+    Call<List<Board>> getBoardInfo(@Field("board_no") int board_no);
+
+
+    //공지사항 수정
+    @FormUrlEncoded
+    @POST("uxmlab_board_edit.php")
+    Call<List<Board>> editBoard(
+            @Field("board_title") String board_title,  @Field("board_content") String board_content,   @Field("board_no") String board_no);
+
+
+    //공지사항 삭제
+    @FormUrlEncoded
+    @POST("uxmlab_board_delete.php")
+    Call<List<Board>> deleteBoard(
+            @Field("board_no") String board_no);
 
 }

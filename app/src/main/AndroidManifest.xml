@@ -26,11 +26,12 @@
         <activity android:name=".Activities.AddAssignmentActivity" />
         <activity android:name=".Activities.AssignmentActivity" />
         <activity android:name=".Activities.EditAssignmentActivity" />
-        <activity android:name=".Activities.AssignmentListActivity"/>
+        <activity android:name=".Activities.AssignmentListActivity" />
         <activity android:name=".Activities.NoticeActivity" />
-        <activity android:name=".Activities.NoticeWriteActivity"/>
-        <activity android:name=".Activities.FileUploadActivity"/>
-
+        <activity android:name=".Activities.NoticeWriteActivity" />
+        <activity android:name=".Activities.FileUploadActivity" />
+        <activity android:name=".Activities.NoticeDetailActivity" />
+        <activity android:name=".Activities.NoticeEditActivity"></activity>
     </application>
 
 </manifest>

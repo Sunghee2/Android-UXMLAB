@@ -5,6 +5,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -25,7 +26,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class NoticeActivity extends AppCompatActivity {
     ListView listView;
     String course_no;
-
+    List<Board> boardList;
+    String[] board_no;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,7 +37,19 @@ public class NoticeActivity extends AppCompatActivity {
         course_no = intent.getStringExtra("course_number");
 
         listView = (ListView) findViewById(R.id.list_view);
+        //각 리스트를 선택했을 때
+
         getBoards();
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(NoticeActivity.this, NoticeDetailActivity.class);
+                intent.putExtra("board_no", board_no[position]);
+                intent.putExtra("course_no", course_no);
+                startActivity(intent);
+            }
+        });
     }
 
     private void getBoards() {
@@ -56,10 +70,11 @@ public class NoticeActivity extends AppCompatActivity {
                 List<Board> boardList = response.body();
 
                 String[] boards = new String[boardList.size()]; //게시글의 개수만큼 리스트로 보여주게 된다.
-
+                board_no=new String[boardList.size()];
                 for (int i = 0; i < boardList.size(); i++) {
                     boards[i] = "제목  :  " + boardList.get(i).getBoard_title() + "\n\n내용  :  " + boardList.get(i).getBoard_content() +
                             "\n\n작성일  :  " + boardList.get(i).getBoard_date() + "\n";
+                    board_no[i]=String.valueOf(boardList.get(i).getBoard_no());
                 }
 
                 listView.setAdapter(new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_list_item_1, boards));
