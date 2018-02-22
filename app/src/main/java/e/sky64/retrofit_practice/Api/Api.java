@@ -54,7 +54,7 @@ public interface Api {
     //3. 관리자 과제 수정 업데이트
     @FormUrlEncoded
     @POST("edit_assignment.php")
-    Call<List<AssignmentList>> editAssignment(
+    Call<List<Result>> editAssignment(
             @Field("hw_no") String hw_no,
             @Field("hw_name") String hw_name,
             @Field("hw_content") String hw_content,

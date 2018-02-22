@@ -16,6 +16,7 @@ import java.util.List;
 
 import e.sky64.retrofit_practice.Api.Api;
 import e.sky64.retrofit_practice.DataPackage.AssignmentList;
+import e.sky64.retrofit_practice.DataPackage.Result;
 import e.sky64.retrofit_practice.R;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -159,15 +160,13 @@ public class EditAssignmentActivity extends AppCompatActivity {
 
         Api api = retrofit.create(Api.class);
 
-        Call<List<AssignmentList>> call = api.editAssignment(hw_no,hw_name,hw_content,hw_due);
-        call.enqueue(new Callback<List<AssignmentList>>() {
+        Call<List<Result>> call = api.editAssignment(hw_no,hw_name,hw_content,hw_due);
+
+        call.enqueue(new Callback<List<Result>>() {
             @Override
-            public void onResponse(Call<List<AssignmentList>> call, Response<List<AssignmentList>> response) {
+            public void onResponse(Call<List<Result>> call, Response<List<Result>> response) {
                 //수정의 결과 받아오기
                 int result = response.body().get(0).getResult();
-
-                //강의번호 받아오기
-                String course_no =  response.body().get(0).getCourse_no();
 
                 if(result==0) { // 수정 실패
                     Toast.makeText(getApplicationContext(), "Error! 수정 실패", Toast.LENGTH_SHORT).show();
@@ -175,10 +174,10 @@ public class EditAssignmentActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), "Success! 수정 성공", Toast.LENGTH_SHORT).show();
 
                     //과제 수정 성공시 AssignmentList로 다시 넘어간다.
-                    Intent intent = new Intent(EditAssignmentActivity.this,AssignmentListActivity.class);
-                    intent.putExtra("course_number",course_no);
+                    Intent intent = new Intent(EditAssignmentActivity.this,AssignmentActivity.class);
+                    intent.putExtra("hw_no",hw_no);
 
-                    //AssignmentListActivity위의 모든 액티비티 종료 후
+                    //EditAssignmentActivity위의 모든 액티비티 종료 후
                     //새로 호출된 AssignmentActivity를 기존 액티비티로 변경하는 플래그
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 
@@ -187,7 +186,7 @@ public class EditAssignmentActivity extends AppCompatActivity {
             }
             // 실패시 처리하는 방법을 정하는 메서드
             @Override
-            public void onFailure(Call<List<AssignmentList>> call, Throwable t) {
+            public void onFailure(Call<List<Result>> call, Throwable t) {
                 Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
