@@ -23,6 +23,7 @@ import java.util.Calendar;
 import java.util.List;
 
 import e.sky64.retrofit_practice.Api.Api;
+import e.sky64.retrofit_practice.DataPackage.AssignmentList;
 import e.sky64.retrofit_practice.DataPackage.Result;
 import e.sky64.retrofit_practice.R;
 import retrofit2.Call;
@@ -172,25 +173,31 @@ public class AddAssignmentActivity extends AppCompatActivity {
 
         Api api = retrofit.create(Api.class);
 
-        Call<List<Result>> call = api.addAssignment(course_no, hw_name, hw_content, hw_due);
+        Call<List<AssignmentList>> call = api.addAssignment(course_no, hw_name, hw_content, hw_due);
 
-        call.enqueue(new Callback<List<Result>>() {
+        call.enqueue(new Callback<List<AssignmentList>>() {
 
             @Override
-            public void onResponse(Call<List<Result>> call, Response<List<Result>> response) {
+            public void onResponse(Call<List<AssignmentList>> call, Response<List<AssignmentList>> response) {
                 // 결과가 어떻게 되었는지. result를 받아옴.
                 int result = response.body().get(0).getResult();
+                String course_number = response.body().get(0).getCourse_no();
 
                 if (result == 0) { //추가 실패
                     Toast.makeText(getApplicationContext(), "Fail! 과제 생성 실패", Toast.LENGTH_SHORT).show();
-                } else if (result == 1) { // 추가 성공
+                } else if (result == 1) { //과제 추가 성공
                     Toast.makeText(getApplicationContext(), "Success! 과제 생성 성공", Toast.LENGTH_SHORT).show();
+
+                    //과제 추가 성공시 과제 리스트로 이동.
+                    Intent intent = new Intent(AddAssignmentActivity.this,AssignmentListActivity.class);
+                    intent.putExtra("course_number",course_number);
+                    startActivity(intent);
                 }
             }
 
             // 실패
             @Override
-            public void onFailure(Call<List<Result>> call, Throwable t) {
+            public void onFailure(Call<List<AssignmentList>> call, Throwable t) {
                 Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
