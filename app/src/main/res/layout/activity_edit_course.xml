@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:layout_marginTop="5dp"
+    android:layout_marginRight="5dp"
+    android:layout_marginLeft="5dp"
+    android:layout_marginBottom="5dp">
+
+    <EditText
+        android:id="@+id/edit_course_key"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="key"
+        android:layout_marginBottom="3dp"/>
+    <EditText
+        android:id="@+id/edit_course_no"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="number"
+        android:layout_marginBottom="3dp"/>
+    <EditText
+        android:id="@+id/edit_course_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="name"
+        android:layout_marginBottom="3dp"/>
+    <EditText
+        android:id="@+id/edit_professor"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="professor"
+        android:layout_marginBottom="3dp"/>
+    <TextView
+        android:id="@+id/text_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="3dp"
+        android:layout_marginLeft="3dp"
+        android:textSize="20dp"/>
+    <EditText
+        android:id="@+id/edit_description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:lines="5"
+        android:hint="description"
+        android:layout_marginBottom="3dp"/>
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="수정" />
+</LinearLayout>

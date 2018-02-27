@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://C:\Users\630su\Desktop\Android_UXMLAB-AssignmentPart (1)\Android_UXMLAB-AssignmentPart\Android_UXMLAB.iml" filepath="C:\Users\630su\Desktop\Android_UXMLAB-AssignmentPart (1)\Android_UXMLAB-AssignmentPart\Android_UXMLAB.iml" />
+      <module fileurl="file://D:\2018winterAcademy\Android_UXMLAB\Android_UXMLAB.iml" filepath="D:\2018winterAcademy\Android_UXMLAB\Android_UXMLAB.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Android_UXMLAB-AssignmentPart.iml" filepath="$PROJECT_DIR$/Android_UXMLAB-AssignmentPart.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://C:\Users\630su\Desktop\Android_UXMLAB-AssignmentPart (1)\Android_UXMLAB-AssignmentPart\app\app.iml" filepath="C:\Users\630su\Desktop\Android_UXMLAB-AssignmentPart (1)\Android_UXMLAB-AssignmentPart\app\app.iml" />
+      <module fileurl="file://D:\2018winterAcademy\Android_UXMLAB\app\app.iml" filepath="D:\2018winterAcademy\Android_UXMLAB\app\app.iml" />
+      <module fileurl="file://D:\2018winterAcademy\Android_UXMLAB\retrofit_practice.iml" filepath="D:\2018winterAcademy\Android_UXMLAB\retrofit_practice.iml" />
+    </modules>
+  </component>
+</project>
